@@ -1,5 +1,5 @@
 elasticsearch:
-  hostname1: 39.105.75.88
+  hostname1: 
   port1: 9200
-  username: elastic
-  password: gw123456
+  username: 
+  password: 
