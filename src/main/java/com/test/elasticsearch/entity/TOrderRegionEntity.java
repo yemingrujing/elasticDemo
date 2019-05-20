@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author guang
  * @title: TOrderRegionEntity
  * @projectName elasticDemo
- * @description: TODO
+ * @description: 全国省市区表
  * @date 2019/5/1923:57
  */
 @Entity
@@ -31,6 +31,7 @@ public class TOrderRegionEntity {
     private String remarks;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;

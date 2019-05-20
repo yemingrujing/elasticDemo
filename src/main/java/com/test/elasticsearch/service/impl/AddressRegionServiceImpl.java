@@ -1,6 +1,7 @@
 package com.test.elasticsearch.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.test.elasticsearch.repository.OrderRegionRepository;
 import com.test.elasticsearch.service.AddressRegionService;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;

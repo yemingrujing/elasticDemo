@@ -1,5 +1,6 @@
 package com.test.elasticsearch.service;
 
+import com.test.elasticsearch.entity.TOrderRegionEntity;
 import org.springframework.http.ResponseEntity;
 
 import java.io.UnsupportedEncodingException;
