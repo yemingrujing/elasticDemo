@@ -7,7 +7,7 @@ import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
  * @Package: com.test.elasticsearch.service.impl
  * @ClassName: InvoiceCompanyService
  * @Author: guang
- * @Description: ${description}
+ * @Description: 发票公司信息
  * @Date: 2019/5/20 14:08
  * @Version: 1.0
  */
