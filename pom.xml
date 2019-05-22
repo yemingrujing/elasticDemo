@@ -28,6 +28,7 @@
         <cn.hutool.version>4.5.10</cn.hutool.version>
         <mysql.connector.java.version>8.0.16</mysql.connector.java.version>
         <org.projectlombok.version>1.18.8</org.projectlombok.version>
+        <net.logstash.logback.version>5.3</net.logstash.logback.version>
     </properties>
 
     <repositories>
@@ -111,6 +112,13 @@
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.version}</version>
             <optional>true</optional>
+        </dependency>
+
+        <!-- 日志集成 -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${net.logstash.logback.version}</version>
         </dependency>
     </dependencies>
 
