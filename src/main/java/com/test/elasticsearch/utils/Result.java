@@ -1,5 +1,8 @@
 package com.test.elasticsearch.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.utils
@@ -9,6 +12,8 @@ package com.test.elasticsearch.utils;
  * @Date: 2019/5/21 10:10
  * @Version: 1.0
  */
+@Setter
+@Getter
 public class Result<T> {
 
     /** 错误码. */
@@ -19,28 +24,4 @@ public class Result<T> {
 
     /** 具体的内容. */
     private T data;
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
