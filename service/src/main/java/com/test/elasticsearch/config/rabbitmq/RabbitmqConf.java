@@ -54,19 +54,19 @@ public class RabbitmqConf {
      */
     @Bean
     public Queue dirctQueue() {
-        return new Queue(DIRECT_QUEUE,Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
+        return new Queue(DIRECT_QUEUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
     }
     @Bean
     public Queue topicQueue() {
-        return new Queue(TOPIC_QUEUE,Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
+        return new Queue(TOPIC_QUEUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
     }
     @Bean
     public Queue fanoutQueue() {
-        return new Queue(FANOUT_QUEUE,Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
+        return new Queue(FANOUT_QUEUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
     }
     @Bean
     public Queue headersQueue() {
-        return new Queue(HEADERS_QUEUE,Boolean.TRUE,Boolean.FALSE,Boolean.FALSE);
+        return new Queue(HEADERS_QUEUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
     }
 
     /**
@@ -81,19 +81,19 @@ public class RabbitmqConf {
      */
     @Bean
     public DirectExchange directExchange(){
-        return new DirectExchange(DIRECT_EXCHANGE,Boolean.TRUE,Boolean.FALSE);
+        return new DirectExchange(DIRECT_EXCHANGE, Boolean.TRUE, Boolean.FALSE);
     }
     @Bean
     public TopicExchange topicExchange(){
-        return new TopicExchange(TOPIC_EXCHANGE,Boolean.TRUE,Boolean.FALSE);
+        return new TopicExchange(TOPIC_EXCHANGE, Boolean.TRUE, Boolean.FALSE);
     }
     @Bean
     public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(FANOUT_EXCHANGE,Boolean.TRUE,Boolean.FALSE);
+        return new FanoutExchange(FANOUT_EXCHANGE, Boolean.TRUE, Boolean.FALSE);
     }
     @Bean
     public HeadersExchange headersExchange() {
-        return new HeadersExchange(HEADERS_EXCHANGE,Boolean.TRUE,Boolean.FALSE);
+        return new HeadersExchange(HEADERS_EXCHANGE, Boolean.TRUE, Boolean.FALSE);
     }
 
     // 精准匹配
