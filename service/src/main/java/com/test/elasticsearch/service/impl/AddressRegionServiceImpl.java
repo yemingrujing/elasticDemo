@@ -16,11 +16,9 @@ import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,28 +163,6 @@ public class AddressRegionServiceImpl implements AddressRegionService {
         if (succeeded) {
             return list;
         }
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<String> queryBySql(String sql) throws UnsupportedEncodingException {
-//        Request request = new Request("post", new StringBuilder("_xpack/sql").toString());
-//        // 添加格式优化
-//        request.addParameter("format", "json");
-//
-//        // 拼装body数据
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("query", sql);
-//        request.setEntity(new NStringEntity(jsonObject.toJSONString(), ContentType.APPLICATION_JSON.withCharset(CharsetUtil.CHARSET_UTF_8)));
-//        Response response;
-//        String responseBody = null;
-//        try {
-//            response = restClient.performRequest(request);
-//            responseBody = EntityUtils.toString(response.getEntity(), CharsetUtil.CHARSET_UTF_8);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<>(responseBody, HttpStatus.OK);
         return null;
     }
 }

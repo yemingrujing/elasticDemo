@@ -1,8 +1,5 @@
 package com.test.elasticsearch.service;
 
-import org.springframework.http.ResponseEntity;
-
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -32,12 +29,4 @@ public interface AddressRegionService {
      * @return
      */
     List queryTemplateSearch(Long id, Long provinceId, Long parentId, String name);
-
-    /**
-     * 根据sql查询数据
-     * @param sql
-     * @return
-     * @throws UnsupportedEncodingException
-     */
-    ResponseEntity<String> queryBySql(String sql) throws UnsupportedEncodingException;
 }

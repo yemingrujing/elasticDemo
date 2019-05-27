@@ -3,10 +3,8 @@ package com.test.elasticsearch.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.test.elasticsearch.service.AddressRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -44,15 +42,6 @@ public class AddressRegionController {
         List<JSONObject> response = addressRegionService.queryTemplateSearch(id, provinceId, parentId, name);
         if (response != null) {
             return response;
-        }
-        return null;
-    }
-
-    @PostMapping("/es/query/sql")
-    public JSONObject queryBySql(@RequestParam String sql) throws UnsupportedEncodingException {
-        ResponseEntity responseEntity = addressRegionService.queryBySql(sql);
-        if (responseEntity.getBody() != null) {
-            return JSONObject.parseObject(responseEntity.getBody().toString());
         }
         return null;
     }
