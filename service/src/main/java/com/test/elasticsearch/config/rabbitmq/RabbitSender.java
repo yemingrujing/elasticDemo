@@ -121,6 +121,6 @@ public class RabbitSender implements RabbitTemplate.ConfirmCallback, RabbitTempl
         String id = UUID.randomUUID().toString();
         log.info("sendOrder id: {}", id);
         CorrelationData correlationData = new CorrelationData(id);
-        rabbitTemplate.convertAndSend("exchange-1", "springboot.def", order, correlationData);
+        rabbitTemplate.convertAndSend(RabbitmqConf.TOPIC_EXCHANGE, "Topic.order", order, correlationData);
     }
 }

@@ -1,6 +1,9 @@
 package com.test.elasticsearch.controller;
 
+import com.test.elasticsearch.config.rabbitmq.RabbitSender;
+import com.test.elasticsearch.elasticsearch.domain.Order;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestController {
 
+    @Autowired
+    private RabbitSender rabbitSender;
+
     @GetMapping("/test")
     public void test(){
         log.info("进入test方法");
         log.debug("进入test方法");
         log.warn("进入test方法");
         log.error("进入test方法");
+    }
+
+    /**
+     * 测试MQ自定义消息
+     */
+    @GetMapping("/mq/send/order")
+    public void testMqOrder(){
+        Order order = new Order();
+        order.setId("1");
+        order.setName("测试");
+        rabbitSender.sendOrder(order);
     }
 }

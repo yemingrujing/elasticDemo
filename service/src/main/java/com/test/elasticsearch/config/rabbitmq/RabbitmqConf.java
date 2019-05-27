@@ -22,10 +22,10 @@ public class RabbitmqConf {
     /**
      * 消息交换机的名字
      * */
-    private static final String DIRECT_EXCHANGE = "DirectExchange";
-    private static final String TOPIC_EXCHANGE = "TopicExchange";
-    private static final String FANOUT_EXCHANGE ="FanoutExchange" ;
-    private static final String HEADERS_EXCHANGE ="HeadersExchange" ;
+    public static final String DIRECT_EXCHANGE = "DirectExchange";
+    public static final String TOPIC_EXCHANGE = "TopicExchange";
+    public static final String FANOUT_EXCHANGE ="FanoutExchange" ;
+    public static final String HEADERS_EXCHANGE ="HeadersExchange" ;
 
     /**
      * 队列的名字
@@ -38,8 +38,8 @@ public class RabbitmqConf {
     /**
      * key
      * */
-    private static final String DIRECT_KEY = "DirectKey";
-    private static final String TOPIC_KEY = "Topic.#";
+    public static final String DIRECT_KEY = "DirectKey";
+    public static final String TOPIC_KEY = "Topic.#";
 
     /**
      * 1.队列名字
@@ -96,31 +96,28 @@ public class RabbitmqConf {
         return new HeadersExchange(HEADERS_EXCHANGE,Boolean.TRUE,Boolean.FALSE);
     }
 
-    /**
-     * 将direct队列和交换机进行绑定
-     * @author  GuangWei
-     * @param
-     * @return  org.springframework.amqp.core.Binding
-     * @exception
-     * @date       2019/5/26 22:20
-     */
+    // 精准匹配
     @Bean
     public Binding bindingDirect() {
         return BindingBuilder.bind(dirctQueue()).to(directExchange()).with(DIRECT_KEY);
     }
+    // 泛型匹配
     @Bean
     public Binding bindingTopic() {
         return BindingBuilder.bind(topicQueue()).to(topicExchange()).with(TOPIC_KEY);
     }
+    // 广播
     @Bean
     public Binding bindingFanout() {
         return BindingBuilder.bind(fanoutQueue()).to(fanoutExchange());
     }
+    // 通过消息headers的键值对匹配
     @Bean
     public Binding headersBinding(){
         Map<String,Object> map = Maps.newHashMap();
         map.put("headers1","value1");
         map.put("headers2","value2");
+        // 做绑定的时候有两种匹配方式供选择。x-match (all/any),意思就是键值对中所有的项都要匹配与只要有一个匹配就可以。
         return BindingBuilder.bind(headersQueue()).to(headersExchange()).whereAll(map).match();
     }
 
