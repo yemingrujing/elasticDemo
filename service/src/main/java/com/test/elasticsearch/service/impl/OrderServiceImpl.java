@@ -1,8 +1,6 @@
 package com.test.elasticsearch.service.impl;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.test.elasticsearch.dto.OrderDTO;
-import com.test.elasticsearch.entity.OrderEntity;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.repository.OrderRepository;
 import com.test.elasticsearch.service.OrderService;
@@ -32,7 +30,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> query(OrderParam param) {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
         orderRepository.findAll();
         return null;
