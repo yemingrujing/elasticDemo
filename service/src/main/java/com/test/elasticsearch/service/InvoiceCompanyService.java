@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service;
 
-import com.test.elasticsearch.elasticsearch.entity.TInvoiceCompanyEntity;
+import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
 
 /**
  * @ProjectName: elasticsearch

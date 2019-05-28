@@ -1,4 +1,4 @@
-package com.test.elasticsearch.config;
+package com.test.elasticsearch.config.elastic;
 
 import org.apache.http.Header;
 import org.apache.http.HttpHost;

@@ -1,6 +1,6 @@
 package com.test.elasticsearch.repository;
 
-import com.test.elasticsearch.elasticsearch.entity.TInvoiceCompanyEntity;
+import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

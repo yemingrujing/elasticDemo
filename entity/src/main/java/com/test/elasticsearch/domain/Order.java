@@ -1,4 +1,4 @@
-package com.test.elasticsearch.elasticsearch.domain;
+package com.test.elasticsearch.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.test.elasticsearch.elasticsearch.entity;
+package com.test.elasticsearch.entity;
 
 import javax.persistence.*;
 import java.util.Objects;

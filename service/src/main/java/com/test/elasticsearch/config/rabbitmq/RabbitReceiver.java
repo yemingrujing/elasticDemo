@@ -1,7 +1,7 @@
 package com.test.elasticsearch.config.rabbitmq;
 
 import com.rabbitmq.client.Channel;
-import com.test.elasticsearch.elasticsearch.domain.Order;
+import com.test.elasticsearch.domain.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.*;

@@ -1,4 +1,4 @@
-package com.test.elasticsearch.config;
+package com.test.elasticsearch.config.elastic;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;

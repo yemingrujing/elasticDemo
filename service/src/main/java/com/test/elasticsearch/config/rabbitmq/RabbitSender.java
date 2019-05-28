@@ -1,17 +1,14 @@
 package com.test.elasticsearch.config.rabbitmq;
 
-import com.test.elasticsearch.elasticsearch.domain.Order;
+import com.test.elasticsearch.domain.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Map;
 import java.util.UUID;
 
 /**
