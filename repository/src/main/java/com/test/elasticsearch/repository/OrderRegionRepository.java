@@ -1,6 +1,6 @@
 package com.test.elasticsearch.repository;
 
-import com.test.elasticsearch.entity.TOrderRegionEntity;
+import com.test.elasticsearch.entity.OrderRegionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  */
 @Repository
-public interface  OrderRegionRepository extends JpaRepository<TOrderRegionEntity, Integer> {
+public interface  OrderRegionRepository extends JpaRepository<OrderRegionEntity, Integer> {
 
 }

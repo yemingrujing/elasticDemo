@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service.impl;
 
-import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
+import com.test.elasticsearch.entity.InvoiceCompanyEntity;
 import com.test.elasticsearch.repository.InvoiceCompanyRepository;
 import com.test.elasticsearch.service.InvoiceCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class InvoiceCompanyServiceImpl implements InvoiceCompanyService {
     private InvoiceCompanyRepository invoiceCompanyRepository;
 
     @Override
-    public TInvoiceCompanyEntity queryById(Integer id) {
-        Optional<TInvoiceCompanyEntity> invoiceCompanyEntity = invoiceCompanyRepository.findById(id);
+    public InvoiceCompanyEntity queryById(Integer id) {
+        Optional<InvoiceCompanyEntity> invoiceCompanyEntity = invoiceCompanyRepository.findById(id);
         return invoiceCompanyEntity.get();
     }
 }

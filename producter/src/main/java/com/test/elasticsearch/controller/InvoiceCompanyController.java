@@ -1,7 +1,7 @@
 package com.test.elasticsearch.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
+import com.test.elasticsearch.entity.InvoiceCompanyEntity;
 import com.test.elasticsearch.service.InvoiceCompanyService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
@@ -29,7 +29,7 @@ public class InvoiceCompanyController {
 
     @GetMapping("/invoice/company/query/{id}")
     public Result queryById(@PathVariable("id") Integer id) {
-        TInvoiceCompanyEntity invoiceCompanyEntity = invoiceCompanyService.queryById(id);
+        InvoiceCompanyEntity invoiceCompanyEntity = invoiceCompanyService.queryById(id);
         log.info("根据ID查询发票公司信息{}：" + JSON.toJSONString(invoiceCompanyEntity));
         return ResultUtil.success(invoiceCompanyEntity);
     }

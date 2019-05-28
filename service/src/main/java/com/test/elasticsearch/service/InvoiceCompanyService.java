@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service;
 
-import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
+import com.test.elasticsearch.entity.InvoiceCompanyEntity;
 
 /**
  * @ProjectName: elasticsearch
@@ -13,5 +13,5 @@ import com.test.elasticsearch.entity.TInvoiceCompanyEntity;
  */
 public interface InvoiceCompanyService {
 
-    TInvoiceCompanyEntity queryById(Integer id);
+    InvoiceCompanyEntity queryById(Integer id);
 }
