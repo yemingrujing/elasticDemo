@@ -1,18 +1,20 @@
 package com.test.elasticsearch.repository;
 
-import com.test.elasticsearch.entity.InvoiceCompanyEntity;
+import com.test.elasticsearch.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.repository
- * @ClassName: InvoiceCompanyRepository
+ * @ClassName: OrderRepository
  * @Author: guang
  * @Description:
- * @Date: 2019/5/20 10:27
+ * @Date: 2019/5/28 19:14
  * @Version: 1.0
  */
 @Repository
-public interface InvoiceCompanyRepository extends JpaRepository<InvoiceCompanyEntity, Integer> {
+public interface OrderRepository extends JpaRepository<OrderEntity, Integer>, JpaSpecificationExecutor<OrderEntity> {
+
 }

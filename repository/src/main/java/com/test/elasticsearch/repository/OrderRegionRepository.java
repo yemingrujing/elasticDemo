@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @Package: com.test.elasticsearch.repository
  * @ClassName: OrderRegionRepository
  * @Author: guang
- * @Description: ${description}
+ * @Description:
  * @Date: 2019/5/20 10:23
  * @Version: 1.0
  */
