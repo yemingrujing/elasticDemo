@@ -1,5 +1,10 @@
 package com.test.elasticsearch.service;
 
+import com.test.elasticsearch.dto.OrderDTO;
+import com.test.elasticsearch.param.OrderParam;
+
+import java.util.List;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.service
@@ -11,4 +16,5 @@ package com.test.elasticsearch.service;
  */
 public interface OrderService {
 
+    List<OrderDTO> query(OrderParam param);
 }
