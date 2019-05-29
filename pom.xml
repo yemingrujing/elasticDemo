@@ -38,6 +38,7 @@
         <mysql.connector.java.version>8.0.16</mysql.connector.java.version>
         <org.projectlombok.version>1.18.8</org.projectlombok.version>
         <net.logstash.logback.version>5.3</net.logstash.logback.version>
+        <jpa.spec.version>3.2.4</jpa.spec.version>
     </properties>
 
     <repositories>
@@ -60,6 +61,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
                 <version>${spring.boot.starter.data.version}</version>
+            </dependency>
+            <!-- https://www.w3cschool.cn/jpaspec/j19z1s3u.html  https://github.com/wenhao/jpa-spec -->
+            <dependency>
+                <groupId>com.github.wenhao</groupId>
+                <artifactId>jpa-spec</artifactId>
+                <version>${jpa.spec.version}</version>
             </dependency>
 
             <dependency>
