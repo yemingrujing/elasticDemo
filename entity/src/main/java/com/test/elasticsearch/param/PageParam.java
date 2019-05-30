@@ -12,6 +12,7 @@ package com.test.elasticsearch.param;
 public class PageParam {
 
     private static final int DEFAUT_PAGE_SIZE = 10;
+    private static final int DEFAULT_MAX_PAGE_SIZE = 30;
     private int pageNum = 1;
     private int pageSize = DEFAUT_PAGE_SIZE;
 
@@ -34,7 +35,9 @@ public class PageParam {
     public int getPageSize() {
         if(pageSize <= 0){
             return DEFAUT_PAGE_SIZE;
-        }else{
+        } else if (pageSize > DEFAULT_MAX_PAGE_SIZE) {
+            return DEFAULT_MAX_PAGE_SIZE;
+        } else{
             return pageSize;
         }
     }
@@ -42,7 +45,9 @@ public class PageParam {
     public void setPageSize(int pageSize) {
         if(pageSize <= 0){
             this.pageSize = DEFAUT_PAGE_SIZE;
-        }else {
+        }else if (pageSize > DEFAULT_MAX_PAGE_SIZE) {
+            this.pageSize = DEFAULT_MAX_PAGE_SIZE;
+        } else {
             this.pageSize = pageSize;
         }
     }
