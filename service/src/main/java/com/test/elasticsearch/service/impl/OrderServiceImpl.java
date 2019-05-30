@@ -37,12 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> query(OrderParam param) {
         
-        orderRepository.findAll(new Specification<OrderEntity>() {
-            @Override
-            public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return null;
-            }
-        });
+        orderRepository.findAll();
         return null;
     }
 }

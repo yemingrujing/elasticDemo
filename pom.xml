@@ -39,6 +39,7 @@
         <org.projectlombok.version>1.18.8</org.projectlombok.version>
         <net.logstash.logback.version>5.3</net.logstash.logback.version>
         <jpa.spec.version>3.2.4</jpa.spec.version>
+        <querydsl.version>4.2.1</querydsl.version>
     </properties>
 
     <repositories>
@@ -68,12 +69,22 @@
                 <artifactId>jpa-spec</artifactId>
                 <version>${jpa.spec.version}</version>
             </dependency>
+            <!-- querydsl -->
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>${querydsl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <version>${querydsl.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring.boot.starter.data.version}</version>
-                <scope>test</scope>
             </dependency>
 
             <!-- rabbbitmq -->
