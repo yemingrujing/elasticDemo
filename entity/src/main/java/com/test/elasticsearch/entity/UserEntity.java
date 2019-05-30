@@ -124,5 +124,4 @@ public class UserEntity  implements Serializable {
 	 */
 	@Column(name = "login_time")
 	private java.util.Date loginTime;
-
 }

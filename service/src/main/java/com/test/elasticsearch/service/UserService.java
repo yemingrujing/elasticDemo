@@ -1,5 +1,9 @@
 package com.test.elasticsearch.service;
 
+import com.test.elasticsearch.entity.UserEntity;
+
+import java.util.List;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.service
@@ -10,4 +14,6 @@ package com.test.elasticsearch.service;
  * @Version: 1.0
  */
 public interface UserService {
+
+    List<UserEntity> findAll(String phone);
 }

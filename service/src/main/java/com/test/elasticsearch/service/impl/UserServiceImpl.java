@@ -1,9 +1,15 @@
 package com.test.elasticsearch.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.github.wenhao.jpa.PredicateBuilder;
+import com.github.wenhao.jpa.Specifications;
+import com.test.elasticsearch.entity.UserEntity;
 import com.test.elasticsearch.repository.UserRepository;
 import com.test.elasticsearch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ProjectName: elasticsearch
@@ -19,4 +25,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public List<UserEntity> findAll(String phone) {
+        PredicateBuilder<UserEntity> builder =  Specifications.and();
+        if (StrUtil.isNotBlank(phone)) {
+            builder.eq("phone", phone);
+        }
+        return userRepository.findAll(builder.build());
+    }
 }
