@@ -3,6 +3,7 @@ package com.test.elasticsearch.dto;
 import lombok.Data;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
  * @Version: 1.0
  */
 @Data
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 
     /**
      * 订单ID

@@ -1,7 +1,7 @@
 package com.test.elasticsearch.repository;
 
 import com.test.elasticsearch.entity.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.test.elasticsearch.repository.base.BaseJPA;
 
 /**
  * @ProjectName: elasticsearch
@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 2019/5/28 19:16
  * @Version: 1.0
  */
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends BaseJPA<UserEntity> {
 
 }

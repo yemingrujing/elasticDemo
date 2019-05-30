@@ -1,7 +1,7 @@
 package com.test.elasticsearch.repository;
 
 import com.test.elasticsearch.entity.InvoiceCompanyEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.test.elasticsearch.repository.base.BaseJPA;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  */
 @Repository
-public interface InvoiceCompanyRepository extends JpaRepository<InvoiceCompanyEntity, Integer> {
+public interface InvoiceCompanyRepository extends BaseJPA<InvoiceCompanyEntity> {
 }

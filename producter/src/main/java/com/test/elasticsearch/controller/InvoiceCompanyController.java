@@ -30,7 +30,6 @@ public class InvoiceCompanyController {
     @GetMapping("/invoice/company/query/{id}")
     public Result queryById(@PathVariable("id") Integer id) {
         InvoiceCompanyEntity invoiceCompanyEntity = invoiceCompanyService.queryById(id);
-        log.info("根据ID查询发票公司信息{}：" + JSON.toJSONString(invoiceCompanyEntity));
         return ResultUtil.success(invoiceCompanyEntity);
     }
 }
