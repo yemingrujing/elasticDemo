@@ -1,6 +1,7 @@
 package com.test.elasticsearch.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> query(OrderParam param) {
+    public QueryResults<OrderDTO> query(OrderParam param) {
         QOrderEntity orderEntity = QOrderEntity.orderEntity;
         QUserEntity userEntity = QUserEntity.userEntity;
         JPAQuery<OrderDTO> query = queryFactory.select(
@@ -54,7 +55,8 @@ public class OrderServiceImpl implements OrderService {
                         userEntity.phone,
                         userEntity.nickName,
                         orderEntity.orderCode,
-                        orderEntity.totalFee
+                        orderEntity.totalFee,
+                        orderEntity.createTime
                 )
         )
                 .from(orderEntity)
@@ -71,6 +73,6 @@ public class OrderServiceImpl implements OrderService {
         if (param.getUserId() != null) {
             query.where(userEntity.id.eq(param.getUserId()));
         }
-        return query.fetch();
+        return query.orderBy(orderEntity.createTime.desc()).offset(param.getOffset()).limit(param.getPageSize()).fetchResults();
     }
 }

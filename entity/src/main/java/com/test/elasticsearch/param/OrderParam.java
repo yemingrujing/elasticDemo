@@ -3,6 +3,8 @@ package com.test.elasticsearch.param;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.param
@@ -14,7 +16,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class OrderParam {
+public class OrderParam extends PageParam implements Serializable {
 
     /**
      * 订单号

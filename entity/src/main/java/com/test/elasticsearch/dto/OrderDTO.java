@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @ProjectName: elasticsearch
@@ -31,18 +32,20 @@ public class OrderDTO implements Serializable {
     /**
      * 用户昵称
      */
-    @Column(name = "nick_name")
     private String nickName;
 
     /**
      * 用户订单号
      */
-    @Column(name = "order_code")
     private String orderCode;
 
     /**
      * 总费用
      */
-    @Column(name = "total_fee")
     private BigDecimal totalFee;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 }

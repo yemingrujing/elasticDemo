@@ -1,5 +1,6 @@
 package com.test.elasticsearch.controller;
 
+import com.querydsl.core.QueryResults;
 import com.test.elasticsearch.dto.OrderDTO;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.service.OrderService;
@@ -8,8 +9,6 @@ import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @ProjectName: elasticsearch
@@ -28,7 +27,7 @@ public class OrderController {
 
     @GetMapping("/order/query")
     public Result query(OrderParam param) {
-        List<OrderDTO> list = orderService.query(param);
+        QueryResults<OrderDTO> list = orderService.query(param);
         return ResultUtil.success(list);
     }
 }
