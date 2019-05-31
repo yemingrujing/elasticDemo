@@ -1,6 +1,7 @@
 package com.test.elasticsearch.config.rabbitmq;
 
 import com.google.common.collect.Maps;
+import com.test.elasticsearch.enums.DirectEnum;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -38,7 +39,7 @@ public class RabbitmqConf {
     /**
      * key
      * */
-    public static final String DIRECT_KEY = "DirectKey";
+    public static final DirectEnum DIRECT_KEY = DirectEnum.DirectKey;
     public static final String TOPIC_KEY = "Topic.#";
 
     /**

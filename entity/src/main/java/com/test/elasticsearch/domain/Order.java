@@ -20,6 +20,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Order implements Serializable {
 
-    private String id;
-    private String name;
+    /**
+     * 主键
+     */
+    private Integer id;
+
+    /**
+     * 订单code
+    */
+    private String orderCode;
+
+    /**
+     * 用户ID
+     */
+    private Integer userId;
 }

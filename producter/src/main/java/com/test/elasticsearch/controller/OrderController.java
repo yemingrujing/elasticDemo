@@ -1,7 +1,11 @@
 package com.test.elasticsearch.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.querydsl.core.QueryResults;
+import com.test.elasticsearch.config.rabbitmq.RabbitSender;
+import com.test.elasticsearch.config.rabbitmq.RabbitmqConf;
 import com.test.elasticsearch.dto.OrderDTO;
+import com.test.elasticsearch.enums.DirectEnum;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.service.OrderService;
 import com.test.elasticsearch.utils.Result;
@@ -25,9 +29,18 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private RabbitSender rabbitSender;
+
     @GetMapping("/order/query")
     public Result query(OrderParam param) {
         QueryResults<OrderDTO> list = orderService.query(param);
         return ResultUtil.success(list);
+    }
+
+    @GetMapping("/mq/order/query")
+    public Result queryByMq(OrderParam param) {
+        rabbitSender.sendMessage(RabbitmqConf.DIRECT_EXCHANGE, DirectEnum.DirectKey.name(), JSON.toJSONString(param));
+        return ResultUtil.success();
     }
 }

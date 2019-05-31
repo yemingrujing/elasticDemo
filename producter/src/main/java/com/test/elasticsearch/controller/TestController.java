@@ -35,8 +35,9 @@ public class TestController {
     @GetMapping("/mq/send/order")
     public void testMqOrder(){
         Order order = new Order();
-        order.setId("1");
-        order.setName("测试");
+        order.setId(2936);
+        order.setOrderCode("42019030816050432845");
+        order.setUserId(745);
         rabbitSender.sendOrder(order);
     }
 }
