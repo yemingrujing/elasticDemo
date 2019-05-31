@@ -12,8 +12,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     properties:
-          hibernate:
-            format_sql: true
+      # jpa打印sql语句
+      hibernate:
+        format_sql: true
     hibernate:
       ddl-auto: update
   rabbitmq:
@@ -46,11 +47,19 @@ spring:
         retry:
           # 消费者端的重试
           enabled: true
+  data:
+    mongodb:
+      host:
+      username: test
+      password: q123456789
+      port: 27017
+      database: test
 elasticsearch:
   hostname1:
   port1: 9200
   username:
   password:
+# jpa日志打印sql参数
 logging:
   level:
     org:

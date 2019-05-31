@@ -12,6 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     properties:
+      # jpa打印sql语句
       hibernate:
         format_sql: true
     hibernate:
@@ -44,11 +45,19 @@ spring:
         max-interval: 10000
         # 上一次尝试时间间隔的乘数 1.0
         multiplier: 1.0
+  data:
+    mongodb:
+      host:
+      username: test
+      password: q123456789
+      port: 27017
+      database: test
 elasticsearch:
   hostname1:
   port1: 9200
   username:
   password:
+# jpa日志打印sql参数
 logging:
   level:
     org:
