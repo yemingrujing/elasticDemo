@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.List;
 
 /**
  * @ProjectName: elasticsearch
