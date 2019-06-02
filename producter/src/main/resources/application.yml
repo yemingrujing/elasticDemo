@@ -7,6 +7,8 @@ spring:
     url: jdbc:mysql://localhost:3306/commerce?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
     username: root
     password: q123456789
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
