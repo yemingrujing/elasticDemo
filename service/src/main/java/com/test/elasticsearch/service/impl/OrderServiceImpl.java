@@ -1,5 +1,6 @@
 package com.test.elasticsearch.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
@@ -16,11 +17,13 @@ import com.test.elasticsearch.repository.mongodb.OrderMBRepository;
 import com.test.elasticsearch.repository.mysql.OrderRepository;
 import com.test.elasticsearch.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -85,9 +88,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveToMongoDB(String orderCode) {
-        Specification<OrderEntity> builder = Specifications.<OrderEntity>and().eq("orderCode", orderCode).build();
-        Optional<OrderEntity> orderEntity = orderRepository.findOne(builder);
-        orderMBRepository.insert(orderEntity.get());
+    public void saveToMongoDB(OrderParam param) {
+        PredicateBuilder<OrderEntity> builder = Specifications.and();
+        if (StrUtil.isNotBlank(param.getOrderCode())) {
+            builder.like("orderCode", "%" + param.getOrderCode() + "%");
+        }
+        if (param.getUserId() != null) {
+            builder.eq("userId", param.getUserId());
+        }
+        if (param.getOrderType() != null) {
+            builder.eq("orderType", param.getOrderType());
+        }
+        List<OrderEntity> orderEntityList = orderRepository.findAll(builder.build());
+        orderMBRepository.insert(orderEntityList);
+    }
+
+    @Override
+    public void delToMongoDB(OrderParam param) {
+        OrderEntity orderEntity = new OrderEntity();
+        BeanUtil.copyProperties(param, orderEntity);
+        Example<OrderEntity> example = Example.of(orderEntity);
+        List<OrderEntity> orderEntityList = orderMBRepository.findAll(example);
+        orderMBRepository.deleteAll(orderEntityList);
     }
 }

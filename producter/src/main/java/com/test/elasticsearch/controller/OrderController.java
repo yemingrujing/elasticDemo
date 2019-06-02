@@ -47,7 +47,13 @@ public class OrderController {
 
     @PostMapping("/mq/order/mongoDB/save")
     public Result saveToMongoDB(OrderParam param) {
-        orderService.saveToMongoDB(param.getOrderCode());
+        orderService.saveToMongoDB(param);
+        return ResultUtil.success();
+    }
+
+    @PostMapping("/mq/order/mongoDB/del")
+    public Result delToMongoDB(OrderParam param) {
+        orderService.delToMongoDB(param);
         return ResultUtil.success();
     }
 }

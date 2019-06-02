@@ -28,10 +28,20 @@ public interface OrderService {
     /**
      * 根据订单号保存数据到mongoDB
      * @author  GuangWei
-     * @param orderCode
+     * @param param
      * @return  void
      * @exception
      * @date       2019/6/2 21:30
      */
-    void saveToMongoDB(String orderCode);
+    void saveToMongoDB(OrderParam param);
+
+    /**
+     * 根据条件删除数据
+     * @author  GuangWei
+     * @param param
+     * @return  void
+     * @exception
+     * @date       2019/6/2 21:30
+     */
+    void delToMongoDB(OrderParam param);
 }
