@@ -1,7 +1,7 @@
-package com.test.elasticsearch.repository;
+package com.test.elasticsearch.repository.mysql;
 
 import com.test.elasticsearch.entity.InvoiceCompanyEntity;
-import com.test.elasticsearch.repository.base.BaseJPA;
+import com.test.elasticsearch.repository.mysql.base.BaseJPA;
 import org.springframework.stereotype.Repository;
 
 /**

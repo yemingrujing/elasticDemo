@@ -1,21 +1,27 @@
 package com.test.elasticsearch.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.github.wenhao.jpa.PredicateBuilder;
+import com.github.wenhao.jpa.Specifications;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.test.elasticsearch.dto.OrderDTO;
+import com.test.elasticsearch.entity.OrderEntity;
 import com.test.elasticsearch.entity.QOrderEntity;
 import com.test.elasticsearch.entity.QUserEntity;
 import com.test.elasticsearch.param.OrderParam;
-import com.test.elasticsearch.repository.OrderRepository;
+import com.test.elasticsearch.repository.mongodb.OrderMBRepository;
+import com.test.elasticsearch.repository.mysql.OrderRepository;
 import com.test.elasticsearch.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 /**
  * @ProjectName: elasticsearch
@@ -31,6 +37,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderMBRepository orderMBRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -73,5 +82,12 @@ public class OrderServiceImpl implements OrderService {
             query.where(userEntity.id.eq(param.getUserId()));
         }
         return query.orderBy(orderEntity.createTime.desc()).offset(param.getOffset()).limit(param.getPageSize()).fetchResults();
+    }
+
+    @Override
+    public void saveToMongoDB(String orderCode) {
+        Specification<OrderEntity> builder = Specifications.<OrderEntity>and().eq("orderCode", orderCode).build();
+        Optional<OrderEntity> orderEntity = orderRepository.findOne(builder);
+        orderMBRepository.insert(orderEntity.get());
     }
 }

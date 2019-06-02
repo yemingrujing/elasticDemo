@@ -12,6 +12,7 @@ import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,6 +42,12 @@ public class OrderController {
     @GetMapping("/mq/order/query")
     public Result queryByMq(OrderParam param) {
         rabbitSender.sendMessage(RabbitmqConf.DIRECT_EXCHANGE, DirectEnum.DirectKey.name(), JSON.toJSONString(param));
+        return ResultUtil.success();
+    }
+
+    @PostMapping("/mq/order/mongoDB/save")
+    public Result saveToMongoDB(OrderParam param) {
+        orderService.saveToMongoDB(param.getOrderCode());
         return ResultUtil.success();
     }
 }
