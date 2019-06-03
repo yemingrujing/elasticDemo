@@ -115,6 +115,10 @@ public class OrderServiceImpl implements OrderService {
         BeanUtil.copyProperties(param, orderDb);
         Example<OrderDb> example = Example.of(orderDb);
         List<OrderDb> orderDbList = orderMBRepository.findAll(example);
-        orderMBRepository.deleteAll(orderDbList);
+        if (CollectionUtil.isNotEmpty(orderDbList)) {
+            for (OrderDb order : orderDbList) {
+                orderMBRepository.deleteById(order.getId());
+            }
+        }
     }
 }
