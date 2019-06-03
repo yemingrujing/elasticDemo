@@ -1,6 +1,5 @@
 package com.test.elasticsearch.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
@@ -20,7 +19,9 @@ import com.test.elasticsearch.repository.mongodb.OrderMBRepository;
 import com.test.elasticsearch.repository.mysql.OrderRepository;
 import com.test.elasticsearch.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     // JPA查询工厂
     private JPAQueryFactory queryFactory;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @PostConstruct
     public void initFactory() {
@@ -105,20 +109,28 @@ public class OrderServiceImpl implements OrderService {
         List<OrderEntity> orderEntityList = orderRepository.findAll(builder.build());
         if (CollectionUtil.isNotEmpty(orderEntityList)) {
             List<OrderDb> orderDbList = JSON.parseArray(JSON.toJSONString(orderEntityList), OrderDb.class);
+            Long start = System.currentTimeMillis();
             orderMBRepository.insert(orderDbList);
+            // 使用mongoTemplate插入数据
+            //mongoTemplate.insert(orderDbList, OrderDb.class);
+            Long end = System.currentTimeMillis();
+            System.out.println(end - start);
         }
     }
 
     @Override
     public void delToMongoDB(OrderParam param) {
-        OrderDb orderDb = new OrderDb();
-        BeanUtil.copyProperties(param, orderDb);
-        Example<OrderDb> example = Example.of(orderDb);
-        List<OrderDb> orderDbList = orderMBRepository.findAll(example);
-        if (CollectionUtil.isNotEmpty(orderDbList)) {
-            for (OrderDb order : orderDbList) {
-                orderMBRepository.deleteById(order.getId());
-            }
+        Criteria criteria = new Criteria();
+        if (StrUtil.isNotBlank(param.getOrderCode())) {
+            criteria = criteria.and("orderCode").is(param.getOrderCode());
         }
+        if (param.getUserId() != null) {
+            criteria = criteria.and("userId").is(param.getUserId());
+        }
+        if (param.getOrderType() != null) {
+            criteria = criteria.and("orderType").is(param.getOrderType());
+        }
+        Query query = new Query(criteria);
+        mongoTemplate.remove(query, OrderDb.class);
     }
 }

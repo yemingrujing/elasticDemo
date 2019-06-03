@@ -45,13 +45,13 @@ public class OrderController {
         return ResultUtil.success();
     }
 
-    @PostMapping("/mq/order/mongoDB/save")
+    @PostMapping("/order/mongoDB/save")
     public Result saveToMongoDB(OrderParam param) {
         orderService.saveToMongoDB(param);
         return ResultUtil.success();
     }
 
-    @PostMapping("/mq/order/mongoDB/del")
+    @PostMapping("/order/mongoDB/del")
     public Result delToMongoDB(OrderParam param) {
         orderService.delToMongoDB(param);
         return ResultUtil.success();
