@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
+@Entity
 @Document(collection = "t_user")
 @CompoundIndexes(
 		@CompoundIndex(name = "user_idx", def = "{'phone': 1, 'nickName': 1, 'birthday': -1}")

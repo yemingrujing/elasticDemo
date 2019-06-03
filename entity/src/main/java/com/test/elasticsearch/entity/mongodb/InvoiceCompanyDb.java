@@ -5,10 +5,12 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
+@Entity
 @Document(collection = "t_invoice_company")
 public class InvoiceCompanyDb implements Serializable {
 

@@ -5,10 +5,12 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
+@Entity
 @Document(collection = "t_order_region")
 public class OrderRegionDb implements Serializable {
 
