@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "t_order_region")
-public class OrderRegionEntity  implements Serializable {
+public class OrderRegionEntity implements Serializable {
 
 	/**
 	 * 主键

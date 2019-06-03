@@ -15,7 +15,7 @@ import java.io.Serializable;
 @CompoundIndexes(
 		@CompoundIndex(name = "orderCode_idx", def = "{'order_code': 1, 'user_id': 1}")
 )
-public class OrderDb  implements Serializable {
+public class OrderDb implements Serializable {
 
 	/**
 	 * 主键

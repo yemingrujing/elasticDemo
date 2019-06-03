@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "t_invoice_company")
-public class InvoiceCompanyEntity  implements Serializable {
+public class InvoiceCompanyEntity implements Serializable {
 
 	/**
 	 * 主键

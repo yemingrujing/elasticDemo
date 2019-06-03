@@ -15,7 +15,7 @@ import java.io.Serializable;
 @CompoundIndexes(
 		@CompoundIndex(name = "user_idx", def = "{'phone': 1, 'nickName': 1, 'birthday': -1}")
 )
-public class UserDb  implements Serializable {
+public class UserDb implements Serializable {
 
 	/**
 	 * 主键

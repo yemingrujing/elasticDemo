@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Data
 @Document(collection = "t_invoice_company")
-public class InvoiceCompanyDb  implements Serializable {
+public class InvoiceCompanyDb implements Serializable {
 
 	/**
 	 * 主键

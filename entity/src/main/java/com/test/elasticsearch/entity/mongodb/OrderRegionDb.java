@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Data
 @Document(collection = "t_order_region")
-public class OrderRegionDb  implements Serializable {
+public class OrderRegionDb implements Serializable {
 
 	/**
 	 * 主键
