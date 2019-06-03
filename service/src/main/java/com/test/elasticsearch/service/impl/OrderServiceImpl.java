@@ -109,12 +109,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderEntity> orderEntityList = orderRepository.findAll(builder.build());
         if (CollectionUtil.isNotEmpty(orderEntityList)) {
             List<OrderDb> orderDbList = JSON.parseArray(JSON.toJSONString(orderEntityList), OrderDb.class);
-            Long start = System.currentTimeMillis();
             orderMBRepository.insert(orderDbList);
             // 使用mongoTemplate插入数据
             //mongoTemplate.insert(orderDbList, OrderDb.class);
-            Long end = System.currentTimeMillis();
-            System.out.println(end - start);
         }
     }
 
