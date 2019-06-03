@@ -1,6 +1,8 @@
 package com.test.elasticsearch.entity.mongodb;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -10,6 +12,9 @@ import java.io.Serializable;
 
 @Data
 @Document(collection = "t_order")
+@CompoundIndexes(
+		@CompoundIndex(name = "orderCode_idx", def = "{'order_code': 1, 'user_id': 1}")
+)
 public class OrderDb  implements Serializable {
 
 	/**
@@ -24,7 +29,6 @@ public class OrderDb  implements Serializable {
 	 * 订单编号
 	 */
 	@Field("order_code")
-	@Indexed(unique = true)
 	private String orderCode;
 
 	/**
