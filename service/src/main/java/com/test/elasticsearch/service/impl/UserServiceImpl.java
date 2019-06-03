@@ -3,7 +3,7 @@ package com.test.elasticsearch.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
-import com.test.elasticsearch.entity.UserEntity;
+import com.test.elasticsearch.entity.mysql.UserEntity;
 import com.test.elasticsearch.repository.mysql.UserRepository;
 import com.test.elasticsearch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

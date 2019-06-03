@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service.impl;
 
-import com.test.elasticsearch.entity.InvoiceCompanyEntity;
+import com.test.elasticsearch.entity.mysql.InvoiceCompanyEntity;
 import com.test.elasticsearch.repository.mysql.InvoiceCompanyRepository;
 import com.test.elasticsearch.service.InvoiceCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;

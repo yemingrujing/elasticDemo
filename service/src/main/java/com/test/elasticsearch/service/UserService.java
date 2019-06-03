@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service;
 
-import com.test.elasticsearch.entity.UserEntity;
+import com.test.elasticsearch.entity.mysql.UserEntity;
 
 import java.util.List;
 

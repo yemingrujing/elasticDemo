@@ -1,6 +1,6 @@
 package com.test.elasticsearch.repository.mysql;
 
-import com.test.elasticsearch.entity.UserEntity;
+import com.test.elasticsearch.entity.mysql.UserEntity;
 import com.test.elasticsearch.repository.mysql.base.BaseJPA;
 
 /**

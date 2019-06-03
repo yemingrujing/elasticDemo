@@ -1,127 +1,137 @@
-package com.test.elasticsearch.entity;
+package com.test.elasticsearch.entity.mongodb;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name = "t_user")
-public class UserEntity  implements Serializable {
+@Document(collection = "t_user")
+public class UserDb  implements Serializable {
 
 	/**
 	 * 主键
 	 */
   	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Indexed(unique = true)
+	@Field("id")
 	private Integer id;
 
 	/**
 	 * 手机号
 	 */
+	@Field("phone")
 	private String phone;
 
 	/**
 	 * 电子邮件
 	 */
+	@Field("email")
 	private String email;
 
 	/**
 	 * 用户密码
 	 */
-	@Column(name = "pass_word")
+	@Field("pass_word")
 	private String passWord;
 
 	/**
 	 * 性别（男-0,1-女）
 	 */
+	@Field("sex")
 	private Short sex;
 
 	/**
 	 * 头像地址
 	 */
-	@Column(name = "image_url")
+	@Field("image_url")
 	private String imageUrl;
 
 	/**
 	 * 用户昵称
 	 */
-	@Column(name = "nick_name")
+	@Field("nick_name")
 	private String nickName;
 
 	/**
 	 * 用户名称
 	 */
-	@Column(name = "user_name")
+	@Field("user_name")
 	private String userName;
 
 	/**
 	 * 用户生日
 	 */
+	@Field("birthday")
 	private java.util.Date birthday;
 
 	/**
 	 * QQ
 	 */
+	@Field("qq")
 	private String qq;
 
 	/**
 	 * 微信
 	 */
-	@Column(name = "wei_xin")
+	@Field("wei_xin")
 	private String weiXin;
 
 	/**
 	 * 允许设备最大接入数量
 	 */
-	@Column(name = "max_login_number")
+	@Field("max_login_number")
 	private Integer maxLoginNumber;
 
 	/**
 	 * 用户登录身份令牌
 	 */
-	@Column(name = "to_ken")
+	@Field("to_ken")
 	private String toKen;
 
 	/**
 	 * 是否年缴费( 0 - 否，1 - 是) 第一次缴费后必须按年缴费
 	 */
-	@Column(name = "is_year_payment")
+	@Field("is_year_payment")
 	private Short isYearPayment;
 
 	/**
 	 * 登录设备token
 	 */
-	@Column(name = "device_token")
+	@Field("device_token")
 	private String deviceToken;
 
 	/**
 	 * 登录设备类型
 	 */
-	@Column(name = "device_type")
+	@Field("device_type")
 	private String deviceType;
 
 	/**
 	 * 创建时间
 	 */
-	@Column(name = "create_time")
+	@Field("create_time")
 	private java.util.Date createTime;
 
 	/**
 	 * 用户是否被锁定(0:未锁定，1:锁定)
 	 */
+	@Field("locked")
 	private Short locked;
 
 	/**
 	 * 注册渠道(0：APP,1：PC,2：旁听)
 	 */
-	@Column(name = "register_channel")
+	@Field("register_channel")
 	private Short registerChannel;
 
 	/**
 	 * 最后登录时间
 	 */
-	@Column(name = "login_time")
+	@Field("login_time")
 	private java.util.Date loginTime;
+
 }

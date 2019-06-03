@@ -1,7 +1,6 @@
 package com.test.elasticsearch.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.test.elasticsearch.entity.InvoiceCompanyEntity;
+import com.test.elasticsearch.entity.mysql.InvoiceCompanyEntity;
 import com.test.elasticsearch.service.InvoiceCompanyService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;

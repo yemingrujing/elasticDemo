@@ -1,10 +1,9 @@
 package com.test.elasticsearch.controller;
 
-import com.test.elasticsearch.entity.UserEntity;
+import com.test.elasticsearch.entity.mysql.UserEntity;
 import com.test.elasticsearch.service.UserService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
-import org.omg.CORBA.ObjectHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

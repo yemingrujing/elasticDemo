@@ -1,6 +1,6 @@
 package com.test.elasticsearch.repository.mysql;
 
-import com.test.elasticsearch.entity.OrderEntity;
+import com.test.elasticsearch.entity.mysql.OrderEntity;
 import com.test.elasticsearch.repository.mysql.base.BaseJPA;
 import org.springframework.stereotype.Repository;
 

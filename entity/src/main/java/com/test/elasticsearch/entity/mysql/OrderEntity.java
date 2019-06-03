@@ -1,4 +1,4 @@
-package com.test.elasticsearch.entity;
+package com.test.elasticsearch.entity.mysql;
 
 import lombok.Data;
 

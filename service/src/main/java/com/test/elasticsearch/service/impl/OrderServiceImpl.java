@@ -1,7 +1,9 @@
 package com.test.elasticsearch.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
 import com.querydsl.core.QueryResults;
@@ -9,22 +11,22 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.test.elasticsearch.dto.OrderDTO;
-import com.test.elasticsearch.entity.OrderEntity;
-import com.test.elasticsearch.entity.QOrderEntity;
-import com.test.elasticsearch.entity.QUserEntity;
+import com.test.elasticsearch.entity.mongodb.OrderDb;
+import com.test.elasticsearch.entity.mysql.OrderEntity;
+import com.test.elasticsearch.entity.mysql.QOrderEntity;
+import com.test.elasticsearch.entity.mysql.QUserEntity;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.repository.mongodb.OrderMBRepository;
 import com.test.elasticsearch.repository.mysql.OrderRepository;
 import com.test.elasticsearch.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @ProjectName: elasticsearch
@@ -36,6 +38,7 @@ import java.util.Optional;
  * @Version: 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -100,15 +103,18 @@ public class OrderServiceImpl implements OrderService {
             builder.eq("orderType", param.getOrderType());
         }
         List<OrderEntity> orderEntityList = orderRepository.findAll(builder.build());
-        orderMBRepository.insert(orderEntityList);
+        if (CollectionUtil.isNotEmpty(orderEntityList)) {
+            List<OrderDb> orderDbList = JSON.parseArray(JSON.toJSONString(orderEntityList), OrderDb.class);
+            orderMBRepository.insert(orderDbList);
+        }
     }
 
     @Override
     public void delToMongoDB(OrderParam param) {
-        OrderEntity orderEntity = new OrderEntity();
-        BeanUtil.copyProperties(param, orderEntity);
-        Example<OrderEntity> example = Example.of(orderEntity);
-        List<OrderEntity> orderEntityList = orderMBRepository.findAll(example);
-        orderMBRepository.deleteAll(orderEntityList);
+        OrderDb orderDb = new OrderDb();
+        BeanUtil.copyProperties(param, orderDb);
+        Example<OrderDb> example = Example.of(orderDb);
+        List<OrderDb> orderDbList = orderMBRepository.findAll(example);
+        orderMBRepository.deleteAll(orderDbList);
     }
 }
