@@ -1,6 +1,5 @@
 package com.test.elasticsearch.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.test.elasticsearch.config.rabbitmq.RabbitSender;
 import com.test.elasticsearch.domain.Order;
