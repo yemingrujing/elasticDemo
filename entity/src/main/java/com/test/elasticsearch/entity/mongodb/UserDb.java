@@ -23,13 +23,13 @@ public class UserDb implements Serializable {
 	 * 主键
 	 */
   	@Id
-	@Indexed(unique = true)
 	@Field("id")
 	private Integer id;
 
 	/**
 	 * 手机号
 	 */
+	@Indexed(unique = true)
 	@Field("phone")
 	private String phone;
 

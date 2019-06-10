@@ -23,13 +23,13 @@ public class OrderDb implements Serializable {
 	 * 主键
 	 */
   	@Id
-	@Indexed(unique = true)
 	@Field("id")
 	private Integer id;
 
 	/**
 	 * 订单编号
 	 */
+	@Indexed(unique = true)
 	@Field("order_code")
 	private String orderCode;
 
