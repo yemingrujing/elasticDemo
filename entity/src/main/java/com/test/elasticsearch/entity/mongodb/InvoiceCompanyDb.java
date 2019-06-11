@@ -1,7 +1,7 @@
 package com.test.elasticsearch.entity.mongodb;
 
+import com.test.elasticsearch.anno.AutoValue;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -18,9 +18,9 @@ public class InvoiceCompanyDb implements Serializable {
 	 * 主键
 	 */
   	@Id
-	@Indexed(unique = true)
+	@AutoValue
 	@Field("id")
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 6位开票代码

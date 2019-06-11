@@ -1,5 +1,6 @@
 package com.test.elasticsearch.entity.mongodb;
 
+import com.test.elasticsearch.anno.AutoValue;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -14,8 +15,9 @@ import java.io.Serializable;
 @Data
 @Entity
 @Document(collection = "t_user")
+// 数字参数指定索引的方向，1为正序，-1为倒序
 @CompoundIndexes(
-		@CompoundIndex(name = "user_idx", def = "{'phone': 1, 'nickName': 1, 'birthday': -1}")
+		@CompoundIndex(name = "user_phone_name_index", def = "{'nickName': 1, 'creatTime': -1}")
 )
 public class UserDb implements Serializable {
 
@@ -23,8 +25,9 @@ public class UserDb implements Serializable {
 	 * 主键
 	 */
   	@Id
+	@AutoValue
 	@Field("id")
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 手机号
@@ -91,7 +94,7 @@ public class UserDb implements Serializable {
 	 * 允许设备最大接入数量
 	 */
 	@Field("max_login_number")
-	private Integer maxLoginNumber;
+	private Long maxLoginNumber;
 
 	/**
 	 * 用户登录身份令牌

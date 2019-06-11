@@ -56,4 +56,9 @@ public class OrderController {
         orderService.delToMongoDB(param);
         return ResultUtil.success();
     }
+
+    @GetMapping("/order/mongoDB/select")
+    public Result selectToMongoDB(OrderParam param) {
+        return ResultUtil.success(orderService.selectToMongoDB(param));
+    }
 }

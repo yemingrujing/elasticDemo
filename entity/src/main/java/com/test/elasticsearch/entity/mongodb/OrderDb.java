@@ -1,5 +1,6 @@
 package com.test.elasticsearch.entity.mongodb;
 
+import com.test.elasticsearch.anno.AutoValue;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -14,8 +15,9 @@ import java.io.Serializable;
 @Data
 @Entity
 @Document(collection = "t_order")
+// 数字参数指定索引的方向，1为正序，-1为倒序
 @CompoundIndexes(
-		@CompoundIndex(name = "orderCode_idx", def = "{'order_code': 1, 'user_id': 1}")
+		@CompoundIndex(name = "order_code_index", def = "{'userId': 1, 'createTime': -1}")
 )
 public class OrderDb implements Serializable {
 
@@ -23,8 +25,9 @@ public class OrderDb implements Serializable {
 	 * 主键
 	 */
   	@Id
+	@AutoValue
 	@Field("id")
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 订单编号
@@ -103,7 +106,7 @@ public class OrderDb implements Serializable {
 	 * 用户ID
 	 */
 	@Field("user_id")
-	private Integer userId;
+	private Long userId;
 
 	/**
 	 * 手机号码
@@ -115,13 +118,13 @@ public class OrderDb implements Serializable {
 	 * 收货地址
 	 */
 	@Field("address")
-	private Integer address;
+	private Long address;
 
 	/**
 	 * 活动ID
 	 */
 	@Field("promotions_id")
-	private Integer promotionsId;
+	private Long promotionsId;
 
 	/**
 	 * 创建时间
@@ -145,7 +148,7 @@ public class OrderDb implements Serializable {
 	 * 子账号ID
 	 */
 	@Field("sub_user_id")
-	private Integer subUserId;
+	private Long subUserId;
 
 	/**
 	 * 质押金额
