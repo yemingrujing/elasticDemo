@@ -4,15 +4,14 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -586,9 +585,28 @@ public class RedisService {
         RedisAtomicInteger inviteCounter  = new RedisAtomicInteger(key, redisTemplate.getConnectionFactory());
         Integer increment = inviteCounter.getAndIncrement();
         if ((null == increment || increment.intValue() == 0) && liveTime > 0) {
-            // 初始设置过期时间
-            inviteCounter.expire(liveTime, TimeUnit.SECONDS);
+            // 初始设置过期时间 单位毫秒
+            inviteCounter.expire(liveTime, TimeUnit.MILLISECONDS);
         }
         return increment;
+    }
+
+    /**
+     * 现在到指定时间毫秒数
+     * @return
+     */
+    public static Long getCurrent2TodayEndMillisTime(Date date) {
+        Calendar todayEnd = Calendar.getInstance();
+        // Calendar.HOUR 12小时制
+        // HOUR_OF_DAY 24小时制
+        todayEnd.set(Calendar.HOUR_OF_DAY, 23);
+        todayEnd.set(Calendar.MINUTE, 59);
+        todayEnd.set(Calendar.SECOND, 59);
+        todayEnd.set(Calendar.MILLISECOND, 999);
+        return todayEnd.getTimeInMillis() - date.getTime();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getCurrent2TodayEndMillisTime(DateUtils.parseDate("2019-06-13 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})));
     }
 }
