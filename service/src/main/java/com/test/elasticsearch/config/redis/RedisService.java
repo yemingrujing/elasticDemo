@@ -598,8 +598,4 @@ public class RedisService {
     public static Long getCurrent2TodayEndMillisTime(Date date) {
         return date.getTime() - System.currentTimeMillis();
     }
-
-    public static void main(String[] args) {
-        System.out.println(getCurrent2TodayEndMillisTime(DateUtils.parseDate("2019-06-13 23:59:59", new String[]{"yyyy-MM-dd HH:mm:ss"})));
-    }
 }
