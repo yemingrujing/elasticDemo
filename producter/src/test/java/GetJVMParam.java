@@ -1,4 +1,5 @@
 import com.sun.management.OperatingSystemMXBean;
+import sun.misc.VM;
 
 import java.lang.management.*;
 import java.util.List;
@@ -92,5 +93,6 @@ public class GetJVMParam {
         System.out.println("getClassPath " + rmb.getClassPath());
         System.out.println("getLibraryPath " + rmb.getLibraryPath());
         System.out.println("getVmVersion " + rmb.getVmVersion());
+        System.out.println("最大堆外内存大小 [" + VM.maxDirectMemory()/1024/1024 + "MB]");
     }
 }
