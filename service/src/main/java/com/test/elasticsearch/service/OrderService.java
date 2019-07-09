@@ -2,7 +2,10 @@ package com.test.elasticsearch.service;
 
 import com.querydsl.core.QueryResults;
 import com.test.elasticsearch.dto.OrderDTO;
+import com.test.elasticsearch.entity.mongodb.OrderDb;
 import com.test.elasticsearch.param.OrderParam;
+
+import java.util.List;
 
 /**
  * @ProjectName: elasticsearch
@@ -44,4 +47,14 @@ public interface OrderService {
      * @date       2019/6/2 21:30
      */
     void delToMongoDB(OrderParam param);
+
+    /**
+     * 根据条件删除数据
+     * @author  GuangWei
+     * @param param
+     * @return  void
+     * @exception
+     * @date       2019/6/2 21:30
+     */
+    List<OrderDb> selectToMongoDB(OrderParam param);
 }

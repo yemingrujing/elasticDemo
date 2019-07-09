@@ -109,9 +109,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderEntity> orderEntityList = orderRepository.findAll(builder.build());
         if (CollectionUtil.isNotEmpty(orderEntityList)) {
             List<OrderDb> orderDbList = JSON.parseArray(JSON.toJSONString(orderEntityList), OrderDb.class);
-            orderMBRepository.insert(orderDbList);
+            //orderMBRepository.insert(orderDbList);
             // 使用mongoTemplate插入数据
-            //mongoTemplate.insert(orderDbList, OrderDb.class);
+            mongoTemplate.insert(orderDbList, OrderDb.class);
         }
     }
 
@@ -129,5 +129,24 @@ public class OrderServiceImpl implements OrderService {
         }
         Query query = new Query(criteria);
         mongoTemplate.remove(query, OrderDb.class);
+    }
+
+    @Override
+    public List<OrderDb> selectToMongoDB(OrderParam param) {
+        Criteria criteria = new Criteria();
+        if (param.getId() != null) {
+            criteria = criteria.and("id").is(param.getId());
+        }
+        if (StrUtil.isNotBlank(param.getOrderCode())) {
+            criteria = criteria.and("orderCode").is(param.getOrderCode());
+        }
+        if (param.getUserId() != null) {
+            criteria = criteria.and("userId").is(param.getUserId());
+        }
+        if (param.getOrderType() != null) {
+            criteria = criteria.and("orderType").is(param.getOrderType());
+        }
+        Query query = new Query(criteria);
+        return mongoTemplate.find(query, OrderDb.class);
     }
 }

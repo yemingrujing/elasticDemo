@@ -19,6 +19,11 @@ import java.io.Serializable;
 public class OrderParam extends PageParam implements Serializable {
 
     /**
+     * 主键
+     */
+    private Long id;
+
+    /**
      * 订单号
      */
     private String orderCode;

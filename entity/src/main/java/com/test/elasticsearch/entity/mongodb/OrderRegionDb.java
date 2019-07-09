@@ -1,7 +1,7 @@
 package com.test.elasticsearch.entity.mongodb;
 
+import com.test.elasticsearch.anno.AutoValue;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -18,21 +18,21 @@ public class OrderRegionDb implements Serializable {
 	 * 主键
 	 */
   	@Id
-	@Indexed(unique = true)
+	@AutoValue
 	@Field("id")
-	private Integer id;
+	private Long id;
 
 	/**
 	 * 省市区ID
 	 */
 	@Field("province_id")
-	private Integer provinceId;
+	private Long provinceId;
 
 	/**
 	 * 所属地区id
 	 */
 	@Field("parent_id")
-	private Integer parentId;
+	private Long parentId;
 
 	/**
 	 * 省市区名称
