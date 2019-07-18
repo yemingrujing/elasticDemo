@@ -1,4 +1,4 @@
-package test;
+package test.refund;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
