@@ -1,10 +1,8 @@
 package test.proxy;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
  * @ProjectName: elasticsearch
@@ -15,11 +13,14 @@ import java.lang.reflect.Method;
  * @Date: 2019/7/18 17:18
  * @Version: 1.0
  */
-@Setter
-@Getter
 public class AgentRun implements InvocationHandler {
 
     private Object object;
+
+    public Object bind(Object proxy) {
+        this.object = proxy;
+        return Proxy.newProxyInstance(object.getClass().getClassLoader(), object.getClass().getInterfaces(), this);
+    }
 
     /**
      * 处理在动态代理类对象上的方法调用
