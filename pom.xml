@@ -41,6 +41,7 @@
         <jpa.spec.version>3.2.4</jpa.spec.version>
         <querydsl.version>4.2.1</querydsl.version>
         <cn.afterturn.version>4.0.0</cn.afterturn.version>
+        <org.apache.httpcomponents>4.5.9</org.apache.httpcomponents>
     </properties>
 
     <repositories>
@@ -177,6 +178,12 @@
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-annotation</artifactId>
                 <version>${cn.afterturn.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${org.apache.httpcomponents}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
