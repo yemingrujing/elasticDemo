@@ -1,7 +1,8 @@
 package test.thread.pool;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -25,10 +26,10 @@ public class ThreadPoolManager implements ThreadPool {
     private static volatile int executeTaskNumber = 0;
 
     // 任务队列 作为一个缓冲 List线程不安全
-    private List<Runnable> taskQueue = new LinkedList<>();
+//    private List<Runnable> taskQueue = new LinkedList<>();
 
     // 阻塞队列
-//    private BlockingQueue<Runnable> taskQueue = new ArrayBlockingQueue<>(1024);
+    private BlockingQueue<Runnable> taskQueue;
 
     private static ThreadPoolManager threadPool;
 
@@ -52,6 +53,8 @@ public class ThreadPoolManager implements ThreadPool {
 
         // 工作线程初始化
         workThreads = new WorkThread[workerNum];
+        // 初始化任务队列
+        taskQueue = new ArrayBlockingQueue<>(1024);
 
         for (int i = 0; i < ThreadPoolManager.workerNum; i ++) {
             workThreads[i] = new WorkThread();
@@ -115,7 +118,7 @@ public class ThreadPoolManager implements ThreadPool {
     }
 
     /**
-     * 批量执行任务,其实只是把任务加入任务队列，什么时候执行有线程池管理器觉定
+     * 批量执行任务,其实只是把任务加入任务队列，什么时候执行有线程池管理器决定
      * @param tasks
      */
     @Override
@@ -206,7 +209,7 @@ public class ThreadPoolManager implements ThreadPool {
 
                     if (!taskQueue.isEmpty()) {
                         // 取出任务
-                        r = taskQueue.remove(0);
+                        r = taskQueue.poll();
                     }
 
                     if (r != null) {
