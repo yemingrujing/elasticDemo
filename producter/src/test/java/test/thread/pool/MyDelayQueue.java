@@ -58,8 +58,50 @@ public class MyDelayQueue extends AbstractQueue implements BlockingQueue {
     }
 
     @Override
-    public Object take() throws InterruptedException {
-        return null;
+    public MyScheduledFutureTask take() throws InterruptedException {
+        lock.lockInterruptibly();
+        try {
+            for(;;) {
+                // 取出堆中的头节点
+                MyScheduledFutureTask first = queue[0];
+                // 如果堆中没有节点
+                if (first == null) {
+                    available.await();
+                } else {
+                    // 获取节点的等待时间
+                    long delay = first.getDelay(TimeUnit.NANOSECONDS);
+                    // 如果已经不需要等待，直接返回节点任务，并将下一个节点视为头节点进行堆排序
+                    if (delay <= 0) {
+                        return finshPoll(first);
+                    }
+                    // 下面代码线程等待时不再持有无用的first对象，直接释放它
+                    first = null;
+                    // leader不为空，则某个awaitNanos线程已经在取任务，挂起线程
+                    if (leader != null) {
+                        available.await();
+                    } else {
+                        // leader为空，此时没有线程在在取任务，设置leader为当前线程
+                        Thread thisThread = Thread.currentThread();
+                        leader = thisThread;
+                        // 调用awaitNanos方法等待固定时间后，将被唤醒
+                        try {
+                            available.awaitNanos(delay);
+                        } finally {
+                            // 任务等待完毕，leader线程将被唤醒，下个循环将返回节点，此时将leader设置为null
+                            if (leader == thisThread) {
+                                leader = null;
+                            }
+                        }
+                    }
+                }
+            }
+        } finally {
+            // 队列非空时，使用unlock方法随机唤醒等待条件上的任一队列
+            if (queue[0] != null) {
+                available.signal();
+            }
+            lock.unlock();
+        }
     }
 
     @Override
@@ -127,7 +169,12 @@ public class MyDelayQueue extends AbstractQueue implements BlockingQueue {
      * @return
      */
     private MyScheduledFutureTask finshPoll(MyScheduledFutureTask f) {
-
+        int s = --size;
+        MyScheduledFutureTask x = queue[s];
+        queue[s] = null;
+        if (s != 0) {
+            siftDown(0, x);
+        }
         return f;
     }
 
@@ -137,7 +184,17 @@ public class MyDelayQueue extends AbstractQueue implements BlockingQueue {
      * @param key
      */
     private void siftUp(int k, MyScheduledFutureTask key) {
-
+        // 如果子节点比父节点大，则替换
+        while (k > 0) {
+            int parent = (k - 1) / 2;
+            MyScheduledFutureTask e = queue[parent];
+            if (key.compareTo(e) >= 0) {
+                break;
+            }
+            queue[k] = e;
+            k = parent;
+        }
+        queue[k] = key;
     }
 
     /**
@@ -146,6 +203,20 @@ public class MyDelayQueue extends AbstractQueue implements BlockingQueue {
      * @param key
      */
     private void siftDown(int k, MyScheduledFutureTask key) {
-
+        int half = size / 2;
+        while (k < half) {
+            int child = (k * 2) + 1;
+            MyScheduledFutureTask c = queue[child];
+            int right = child + 1;
+            if (right < size && c.compareTo(queue[right]) > 0) {
+                c = queue[child = right];
+            }
+            if (key.compareTo(c) <= 0) {
+                break;
+            }
+            queue[k] = c;
+            k = child;
+        }
+        queue[k] = key;
     }
 }
