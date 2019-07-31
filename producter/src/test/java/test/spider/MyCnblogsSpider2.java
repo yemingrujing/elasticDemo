@@ -22,16 +22,17 @@ public class MyCnblogsSpider2 implements PageProcessor {
     @Override
     public void process(Page page) {
         if (!page.getUrl().regex("https://www.cnblogs.com/[a-z0-9-]+/p/[0-9]{8}.html").match()) {
-            page.putField(page.getHtml().xpath("").toString(), page.getHtml().xpath("").toString());
+            page.putField(page.getHtml().xpath("//*[@id=\"main\"/div/div/div/h3/a[@class=\"titlelnk\"]/text()").toString(),
+                    page.getHtml().xpath("//*[@id=\"main\"/div/div/div/h3/a[@class=\"titlelnk\"]/@href").toString());
         }
     }
 
     @Override
     public Site getSite() {
-        return null;
+        return site;
     }
 
     public static void main(String[] args) {
-        Spider.create(new MyCnblogsSpider2()).addUrl("").addPipeline(new ConsolePipeline()).run();
+        Spider.create(new MyCnblogsSpider2()).addUrl("https://www.cnblogs.com/").addPipeline(new ConsolePipeline()).run();
     }
 }
