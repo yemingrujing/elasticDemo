@@ -36,10 +36,10 @@ public class MyCnblogsSpider2 implements PageProcessor {
     public void process(Page page) {
         if (page.getUrl().regex("^https://www.cnblogs.com/$").match()) {
             page.addTargetRequests(page.getHtml().xpath("//*[@id=\"post_list\"]/div/div[@class=\"post_item_body\"]/h3/a/@href").all());
-//            List<String> pagers = page.getHtml().xpath("//*[@id=\"paging_block\"]/div/a/text()").all();
-//            if (CollectionUtil.isNotEmpty(pagers)) {
-//                totalPageNum = Integer.valueOf(pagers.get(pagers.size() - 2));
-//            }
+            List<String> pagers = page.getHtml().xpath("//*[@id=\"paging_block\"]/div/a/text()").all();
+            if (CollectionUtil.isNotEmpty(pagers)) {
+                totalPageNum = Integer.valueOf(pagers.get(pagers.size() - 2));
+            }
             page.addTargetRequest(ROOT_URL + "sitehome/p/" + ++pageNum);
         } else if (page.getUrl().regex(URL_LIST).match() && pageNum <= totalPageNum) { // 爬取2-totalPageNum页，
             List<String> urls = page.getHtml().xpath("//*[@class=\"post_item\"]/div[@class=\"post_item_body\"]/h3/a/@href").all();
