@@ -23,12 +23,11 @@ public class MyCnblogsSpider1 implements PageProcessor {
     public void process(Page page) {
         if (!page.getUrl().regex("https://www.cnblogs.com/[a-z0-9-]+/p/[0-9]{7}.html").match()) {
             page.addTargetRequests(page.getHtml().xpath("//*[@id=\"mainContent\"]/div/div/div[@class=\"postTitle\"]/a/@href").all());
-            page.putField(page.getHtml().xpath("//*[@id=\"mainContent\"]/div/div/div[@class=\"postTitle\"]/a/text()").toString(),
-                    page.getHtml().xpath("//*[@id=\"mainContent\"]/div/div/div[@class=\"postTitle\"]/a/@href").toString());
         } else {
             page.putField(page.getHtml().xpath("//*[@id=\"cb_post_title_url\"]/text()").toString(),
                     page.getHtml().xpath("//*[@id=\"cb_post_title_url\"]/@href").toString());
         }
+
     }
 
     @Override
@@ -37,7 +36,7 @@ public class MyCnblogsSpider1 implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new MyCnblogsSpider1()).addUrl("https://www.cnblogs.com/justcooooode/")
+        Spider.create(new MyCnblogsSpider1()).addUrl("https://www.cnblogs.com/justcooooode/").thread(5)
                 .addPipeline(new ConsolePipeline()).run();
     }
 }
