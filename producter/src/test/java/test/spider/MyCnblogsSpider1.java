@@ -3,8 +3,11 @@ package test.spider;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.proxy.Proxy;
+import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 
 /**
  * @ProjectName: elasticsearch
@@ -36,7 +39,9 @@ public class MyCnblogsSpider1 implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new MyCnblogsSpider1()).addUrl("https://www.cnblogs.com/justcooooode/").thread(5)
+        HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("118.26.170.209", 8080)));
+        Spider.create(new MyCnblogsSpider1()).addUrl("https://www.cnblogs.com/justcooooode/").setDownloader(httpClientDownloader).thread(5)
                 .addPipeline(new ConsolePipeline()).run();
     }
 }
