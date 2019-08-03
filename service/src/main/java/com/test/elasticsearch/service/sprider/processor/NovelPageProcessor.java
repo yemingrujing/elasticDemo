@@ -38,21 +38,24 @@ public class NovelPageProcessor implements BaseProcessor {
             .setDomain(NOVEL_BASE_URL)
             .setSleepTime(1000)
             .setRetryTimes(3)
-            .setCharset(CharsetUtil.UTF_8)
+            .setCharset(CharsetUtil.GBK)
             .setTimeOut(30000)
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36");
 
     @Override
     public void process(Page page) {
-        if (page.getUrl().regex(NOVEL_ALBUM_URL).match()) {
-            List<String> urlList = page.getHtml().xpath("").all();
-            urlList.stream().forEach(str -> str = NOVEL_BASE_URL + "/" + str);
-            page.addTargetRequests(urlList);
-        } else if (page.getUrl().regex(NOVEL_CHAPTER_URL).match()) {
+        if (page.getUrl().toString().matches(NOVEL_ALBUM_URL)) {
+            String url = page.getUrl().toString();
+            List<String> urlList = page.getHtml().xpath("//*[@class=\"mulu\"]/ul/li/a/@href").all();
+            for (String str : urlList) {
+                page.addTargetRequest(url + str);
+            }
+        } else if (page.getUrl().toString().matches(NOVEL_CHAPTER_URL)) {
+            System.out.println(page.getUrl());
             NovelDb novelDb = NovelDb.builder()
                     .url(page.getUrl().toString())
                     .title(page.getHtml().xpath("//*[@class=\"novel\"]/h1/text()").toString())
-                    .content(page.getHtml().xpath("//*[@class=\"novel\"]/div[@class=\"yd_text2\"]").toString()).build();
+                    .content(page.getHtml().xpath("//*[@class=\"novel\"]/div[@class=\"yd_text2\"]/text()").toString()).build();
             novelMBRepository.save(novelDb);
         }
     }

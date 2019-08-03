@@ -1,7 +1,7 @@
 package com.test.elasticsearch.repository.mongodb;
 
 import com.test.elasticsearch.entity.mongodb.NovelDb;
-import com.test.elasticsearch.repository.mysql.base.BaseJPA;
+import com.test.elasticsearch.repository.mongodb.base.BaseJPA;
 import org.springframework.stereotype.Repository;
 
 /**

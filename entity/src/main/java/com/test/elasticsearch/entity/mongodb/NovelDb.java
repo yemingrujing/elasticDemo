@@ -2,11 +2,14 @@ package com.test.elasticsearch.entity.mongodb;
 
 import com.test.elasticsearch.anno.AutoValue;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * @ProjectName: elasticsearch
@@ -24,7 +27,10 @@ import javax.persistence.Id;
 @Builder
 @Entity
 @Document(collection = "t_novel")
-public class NovelDb {
+@CompoundIndexes(
+        @CompoundIndex(name = "url_index", def = "{'url': 1}")
+)
+public class NovelDb implements Serializable {
 
     /**
      * 主键
