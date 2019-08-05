@@ -1,4 +1,4 @@
-package com.test.elasticsearch.service.sprider.processor;
+package com.test.elasticsearch.service.sprider.processor.pipiline;
 
 import com.test.elasticsearch.repository.mongodb.NovelMBRepository;
 import org.springframework.beans.factory.annotation.Autowired;

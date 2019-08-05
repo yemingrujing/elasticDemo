@@ -27,15 +27,15 @@ public class NovelPageProcessor implements BaseProcessor {
     private NovelMBRepository novelMBRepository;
 
     // url匹配正则表达式
-    public static final String URL_REGEX = "^((ht|f)tps?):\\/\\/[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-.,@?^=%&:\\/~+#]*[\\w\\-@?^=%&\\/~+#])?$";
+    private static final String URL_REGEX = "^((ht|f)tps?):\\/\\/[\\w\\-]+(\\.[\\w\\-]+)+([\\w\\-.,@?^=%&:\\/~+#]*[\\w\\-@?^=%&\\/~+#])?$";
 
     // 88小说下载主域名
-    public static final String NOVEL_BASE_URL = "https://www.88dush.com";
+    private static final String NOVEL_BASE_URL = "https://www.88dush.com";
 
     // 匹配小说URL
-    public static final String NOVEL_ALBUM_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/";
+    private static final String NOVEL_ALBUM_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/";
 
-    public static final String NOVEL_CHAPTER_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/\\d{1,}\\.html";
+    private static final String NOVEL_CHAPTER_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/\\d{1,}\\.html";
 
     private Site site = Site.me()
             .setDomain(NOVEL_BASE_URL)
