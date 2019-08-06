@@ -55,7 +55,6 @@ public class NovelPageProcessor implements BaseProcessor {
                 urlList.stream().forEach(str -> page.addTargetRequest(url + str));
             }
         } else if (page.getUrl().regex(NOVEL_CHAPTER_URL).match()) {
-            System.out.println(page.getUrl());
             NovelDb novelDb = NovelDb.builder()
                     .url(page.getUrl().toString())
                     .title(page.getHtml().xpath("//*[@class=\"novel\"]/h1/text()").toString())
