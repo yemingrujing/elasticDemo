@@ -8,6 +8,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @ProjectName: elasticsearch
@@ -25,7 +26,7 @@ import java.util.List;
 public class CityProcessor implements BaseProcessor {
 
     private static final String TJSJ_CITY_BASE_URL  = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/";
-    private static final String TJSJ_CITY_WEB_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\w+.html$";
+    private static final String TJSJ_CITY_WEB_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/[A-Za-z]+.html$";
 
     // 获取市信息
     private static final String PROVINCE_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}.html$";
@@ -50,23 +51,47 @@ public class CityProcessor implements BaseProcessor {
     @Override
     public void process(Page page) {
         List<String> urlList;
+        String baseUrl;
         if (page.getUrl().regex(TJSJ_CITY_WEB_URL).match()) {
             urlList = page.getHtml().xpath("//*[@class=\"provincetr\"]/td/a/@href").all();
-            if (CollectionUtil.isNotEmpty(urlList)) {
-                urlList.stream().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+//            if (CollectionUtil.isNotEmpty(urlList)) {
+//                urlList.stream().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+//            }
+            // 获取省份code
+            List<String> provinceCodes = page.getHtml().regex("<td><a href=\\\"(.{1,30}).html\\\">.*?<br></a></td>").all();
+            // 获取省份信息
+            List<String> provinceNames = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})<br></a></td>").all();
+            for (int i = 0, n = provinceCodes.size(); i < n; i++) {
+                System.out.println(provinceCodes.get(i) + " " + provinceNames.get(i));
             }
+            page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(3));
         } else if (page.getUrl().regex(PROVINCE_URL).match()) {
             urlList = page.getHtml().xpath("//*[@class=\"citytr\"]/td/a/@href").all();
-            if (CollectionUtil.isNotEmpty(urlList)) {
-                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+//            if (CollectionUtil.isNotEmpty(urlList)) {
+//                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+//            }
+            // 获取省份code
+            List<String> cityInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
+            for (int i = 0, n = cityInfos.size(); i < n; i++) {
+                System.out.println(cityInfos.get(i) + " " + cityInfos.get(++i));
             }
+            page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(2));
         } else if (page.getUrl().regex(CITY_URL).match()) {
+            baseUrl = page.getUrl().regex("^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}/").toString();
             urlList = page.getHtml().xpath("//*[@class=\"countytr\"]/td/a/@href").all();
-            if (CollectionUtil.isNotEmpty(urlList)) {
-                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+//            if (CollectionUtil.isNotEmpty(urlList)) {
+//                urlList.stream().distinct().forEach( str -> page.addTargetRequest(baseUrl + str));
+//            }
+            List<String> countyInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
+            for (int i = 0, n = countyInfos.size(); i < n; i++) {
+                System.out.println(countyInfos.get(i) + " " + countyInfos.get(++i));
             }
+            page.addTargetRequest(baseUrl + urlList.get(1));
         } else if (page.getUrl().regex(AREA_URL).match()) {
-
+            List<String> townInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
+            for (int i = 0, n = townInfos.size(); i < n; i++) {
+                System.out.println(townInfos.get(i) + " " + townInfos.get(++i));
+            }
         }
     }
 
