@@ -1,6 +1,5 @@
 package com.test.elasticsearch.service.sprider.processor;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.CharsetUtil;
 import com.test.elasticsearch.service.sprider.BaseProcessor;
 import org.springframework.stereotype.Component;
@@ -8,8 +7,6 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @ProjectName: elasticsearch
