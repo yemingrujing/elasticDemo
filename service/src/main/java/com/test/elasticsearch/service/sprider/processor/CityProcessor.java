@@ -8,6 +8,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -70,7 +71,9 @@ public class CityProcessor implements BaseProcessor {
 //            if (CollectionUtil.isNotEmpty(urlList)) {
 //                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
 //            }
-            // 获取省份code
+            // 获取省份Code
+            String provinceCode = page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/(.{2,}).html").toString();
+            // 获取城市信息
             List<String> cityInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
             for (int i = 0, n = cityInfos.size(); i < n; i++) {
                 System.out.println(cityInfos.get(i) + " " + cityInfos.get(++i));
@@ -82,12 +85,18 @@ public class CityProcessor implements BaseProcessor {
 //            if (CollectionUtil.isNotEmpty(urlList)) {
 //                urlList.stream().distinct().forEach( str -> page.addTargetRequest(baseUrl + str));
 //            }
+            // 获取城市Code
+            String cityCode = page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/(.{2,}).html").toString();
+            // 获取区县信息
             List<String> countyInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
             for (int i = 0, n = countyInfos.size(); i < n; i++) {
                 System.out.println(countyInfos.get(i) + " " + countyInfos.get(++i));
             }
             page.addTargetRequest(baseUrl + urlList.get(1));
         } else if (page.getUrl().regex(AREA_URL).match()) {
+            // 获取区县Code
+            String countyCode = page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/\\d{1,}/(.{2,}).html").toString();
+            // 获取乡镇信息
             List<String> townInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
             for (int i = 0, n = townInfos.size(); i < n; i++) {
                 System.out.println(townInfos.get(i) + " " + townInfos.get(++i));
