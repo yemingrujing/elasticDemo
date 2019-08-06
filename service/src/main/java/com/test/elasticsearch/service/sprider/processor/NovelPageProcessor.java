@@ -1,5 +1,6 @@
 package com.test.elasticsearch.service.sprider.processor;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.CharsetUtil;
 import com.test.elasticsearch.entity.mongodb.NovelDb;
 import com.test.elasticsearch.repository.mongodb.NovelMBRepository;
@@ -33,7 +34,7 @@ public class NovelPageProcessor implements BaseProcessor {
     private static final String NOVEL_BASE_URL = "https://www.88dush.com";
 
     // 匹配小说URL
-    private static final String NOVEL_ALBUM_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/";
+    private static final String NOVEL_ALBUM_URL = "^((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/$";
 
     private static final String NOVEL_CHAPTER_URL = "((ht|f)tps?):\\/\\/[\\w\\-]+\\.88dush\\.com/xiaoshuo/\\d{1,}/\\d{1,}/\\d{1,}\\.html";
 
@@ -47,13 +48,13 @@ public class NovelPageProcessor implements BaseProcessor {
 
     @Override
     public void process(Page page) {
-        if (page.getUrl().toString().matches(NOVEL_ALBUM_URL)) {
+        if (page.getUrl().regex(NOVEL_ALBUM_URL).match()) {
             String url = page.getUrl().toString();
             List<String> urlList = page.getHtml().xpath("//*[@class=\"mulu\"]/ul/li/a/@href").all();
-            for (String str : urlList) {
-                page.addTargetRequest(url + str);
+            if (CollectionUtil.isNotEmpty(urlList)) {
+                urlList.stream().forEach(str -> page.addTargetRequest(url + str));
             }
-        } else if (page.getUrl().toString().matches(NOVEL_CHAPTER_URL)) {
+        } else if (page.getUrl().regex(NOVEL_CHAPTER_URL).match()) {
             System.out.println(page.getUrl());
             NovelDb novelDb = NovelDb.builder()
                     .url(page.getUrl().toString())
