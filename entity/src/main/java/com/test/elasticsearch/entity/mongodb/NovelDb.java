@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @Package: com.test.elasticsearch.entity.mongodb
  * @ClassName: NovelDB
  * @Author: guang
- * @Description: ${description}
+ * @Description: 小说DTO(db.t_novel.find({},{title: 1, content: 1, _id: 0, by: 1}).sort({'url': 1}))
  * @Date: 2019/8/2 14:49
  * @Version: 1.0
  */
