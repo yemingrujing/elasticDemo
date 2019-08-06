@@ -25,7 +25,7 @@ import java.util.List;
 public class CityProcessor implements BaseProcessor {
 
     private static final String TJSJ_CITY_BASE_URL  = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/";
-    private static final String TJSJ_CITY_WEB_URL = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html";
+    private static final String TJSJ_CITY_WEB_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\w+.html$";
 
     // 获取市信息
     private static final String PROVINCE_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}.html$";
@@ -50,7 +50,7 @@ public class CityProcessor implements BaseProcessor {
     @Override
     public void process(Page page) {
         List<String> urlList;
-        if (TJSJ_CITY_WEB_URL.equals(page.getUrl().toString())) {
+        if (page.getUrl().regex(TJSJ_CITY_WEB_URL).match()) {
             urlList = page.getHtml().xpath("//*[@class=\"provincetr\"]/td/a/@href").all();
             if (CollectionUtil.isNotEmpty(urlList)) {
                 urlList.stream().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));

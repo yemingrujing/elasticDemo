@@ -1,5 +1,6 @@
 package com.test.elasticsearch.controller;
 
+import com.test.elasticsearch.service.sprider.processor.CityProcessor;
 import com.test.elasticsearch.service.sprider.processor.NovelPageProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,20 @@ public class NovelController {
     @Autowired
     private NovelPageProcessor novelPageProcessor;
 
+    @Autowired
+    private CityProcessor cityProcessor;
+
     @GetMapping("/crawel/novel/get")
     public void crawelNovel(String url) {
         HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
         httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy(proxy_ip, proxy_port)));
         Spider.create(novelPageProcessor).addUrl(url).setDownloader(httpClientDownloader).thread(5).run();
+    }
+
+    @GetMapping("/crawel/city/get")
+    public void crawelCity(String url) {
+        HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy(proxy_ip, proxy_port)));
+        Spider.create(cityProcessor).addUrl(url).setDownloader(httpClientDownloader).thread(5).run();
     }
 }
