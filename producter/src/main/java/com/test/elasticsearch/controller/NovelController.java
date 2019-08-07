@@ -22,9 +22,11 @@ import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 @RestController
 public class NovelController {
 
-    private static String proxy_ip = "118.26.170.209";
-
-    private static int proxy_port = 8080;
+    private Proxy[] proxies = new Proxy[]{
+            new Proxy("118.26.170.209", 8080),
+            new Proxy("114.88.30.104", 8118),
+            new Proxy("111.231.93.66", 8888),
+            new Proxy("111.231.94.44", 8888)};
 
     @Autowired
     private NovelPageProcessor novelPageProcessor;
@@ -35,14 +37,14 @@ public class NovelController {
     @GetMapping("/crawel/novel/get")
     public void crawelNovel(String url) {
         HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy(proxy_ip, proxy_port)));
+        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(proxies));
         Spider.create(novelPageProcessor).addUrl(url).setDownloader(httpClientDownloader).thread(5).run();
     }
 
     @GetMapping("/crawel/city/get")
     public void crawelCity(String url) {
         HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy(proxy_ip, proxy_port)));
+        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(proxies));
         Spider.create(cityProcessor).addUrl(url).setDownloader(httpClientDownloader).thread(5).run();
     }
 }

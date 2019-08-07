@@ -1,7 +1,10 @@
 package com.test.elasticsearch.service.sprider.processor;
 
 import cn.hutool.core.util.CharsetUtil;
+import com.test.elasticsearch.entity.mongodb.AddressDb;
 import com.test.elasticsearch.service.sprider.BaseProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -23,6 +26,9 @@ import java.util.List;
 @Component
 public class CityProcessor implements BaseProcessor {
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
     private static final String TJSJ_CITY_BASE_URL  = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/";
     private static final String TJSJ_CITY_WEB_URL = "^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/[A-Za-z]+.html$";
 
@@ -41,10 +47,10 @@ public class CityProcessor implements BaseProcessor {
             .setCharset(CharsetUtil.GBK)
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36");
 
-    private static int provinceFromId = 0;
-    private static int cityFromIdId = 0;
-    private static int areaFormId = 0;
-    private static int townFormId = 0;
+    private static int provinceFromId;
+    private static int cityFromIdId;
+    private static int areaFormId ;
+    private static int townFormId;
 
     @Override
     public void process(Page page) {
@@ -59,8 +65,15 @@ public class CityProcessor implements BaseProcessor {
             List<String> provinceCodes = page.getHtml().regex("<td><a href=\\\"(.{1,30}).html\\\">.*?<br></a></td>").all();
             // 获取省份信息
             List<String> provinceNames = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})<br></a></td>").all();
+            AddressDb addressDb;
+            String parentName = "中国";
             for (int i = 0, n = provinceCodes.size(); i < n; i++) {
-                System.out.println(provinceCodes.get(i) + " " + provinceNames.get(i));
+                addressDb = AddressDb.builder()
+                        .provinceId(Integer.valueOf(provinceCodes.get(i) + "0000"))
+                        .parentId(100000)
+                        .name(provinceNames.get(i))
+                        .mergeName(parentName + "," + provinceNames.get(i)).build();
+                mongoTemplate.insert(addressDb);
             }
             page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(3));
         } else if (page.getUrl().regex(PROVINCE_URL).match()) {
@@ -75,7 +88,7 @@ public class CityProcessor implements BaseProcessor {
             for (int i = 0, n = cityInfos.size(); i < n; i++) {
                 System.out.println(cityInfos.get(i) + " " + cityInfos.get(++i));
             }
-            page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(2));
+//            page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(2));
         } else if (page.getUrl().regex(CITY_URL).match()) {
             baseUrl = page.getUrl().regex("^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}/").toString();
             urlList = page.getHtml().xpath("//*[@class=\"countytr\"]/td/a/@href").all();
@@ -89,7 +102,7 @@ public class CityProcessor implements BaseProcessor {
             for (int i = 0, n = countyInfos.size(); i < n; i++) {
                 System.out.println(countyInfos.get(i) + " " + countyInfos.get(++i));
             }
-            page.addTargetRequest(baseUrl + urlList.get(1));
+//            page.addTargetRequest(baseUrl + urlList.get(1));
         } else if (page.getUrl().regex(AREA_URL).match()) {
             // 获取区县Code
             areaFormId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/\\d{1,}/(.{2,}).html").toString());

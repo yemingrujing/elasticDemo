@@ -47,4 +47,8 @@ public class AddressDb implements Serializable {
     // 省市区名称
     @Field("merge_name")
     private String mergeName;
+
+    // 等级类型
+    @Field("level_type")
+    private Short levelType;
 }
