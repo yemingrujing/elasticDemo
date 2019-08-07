@@ -38,7 +38,8 @@ public class NovelDb implements Serializable {
     @Id
     @AutoValue
     @Field("id")
-    private Long id;
+    @Builder.Default
+    private Long id = 0L;
 
     /**
      * 章节url

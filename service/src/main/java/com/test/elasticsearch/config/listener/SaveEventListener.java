@@ -38,7 +38,9 @@ public class SaveEventListener extends AbstractMongoEventListener<Object> {
             ReflectionUtils.doWithFields(source.getClass(), field -> {
                 ReflectionUtils.makeAccessible(field);
                 // 如果字段添加了我们自定义的AutoValue注解
-                if (field.isAnnotationPresent(AutoValue.class) && field.get(source) instanceof  Number && Long.valueOf(field.get(source).toString()) == 0) {
+                if (field.isAnnotationPresent(AutoValue.class)
+                        && field.get(source) instanceof  Number
+                        && Long.valueOf(field.get(source).toString()) == 0) {
                     field.set(source, getNextId(source.getClass().getSimpleName()));
                     log.info("集合的ID为=======================", source);
                 }

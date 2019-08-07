@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @Package: com.test.elasticsearch.config.anno
  * @ClassName: AutoIncKey
  * @Author: guang
- * @Description: ${description}
+ * @Description: 标识注解：标识主键ID需要自动增长
  * @Date: 2019/6/10 17:03
  * @Version: 1.0
  */

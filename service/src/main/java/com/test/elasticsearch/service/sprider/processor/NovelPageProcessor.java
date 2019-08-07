@@ -51,9 +51,12 @@ public class NovelPageProcessor implements BaseProcessor {
         if (page.getUrl().regex(NOVEL_ALBUM_URL).match()) {
             String url = page.getUrl().toString();
             List<String> urlList = page.getHtml().xpath("//*[@class=\"mulu\"]/ul/li/a/@href").all();
-            if (CollectionUtil.isNotEmpty(urlList)) {
-                urlList.stream().forEach(str -> page.addTargetRequest(url + str));
-            }
+//            if (CollectionUtil.isNotEmpty(urlList)) {
+//                urlList.stream().forEach(str -> page.addTargetRequest(url + str));
+//            }
+            page.addTargetRequest(url + urlList.get(1));
+            page.addTargetRequest(url + urlList.get(2));
+            page.addTargetRequest(url + urlList.get(3));
         } else if (page.getUrl().regex(NOVEL_CHAPTER_URL).match()) {
             NovelDb novelDb = NovelDb.builder()
                     .url(page.getUrl().toString())

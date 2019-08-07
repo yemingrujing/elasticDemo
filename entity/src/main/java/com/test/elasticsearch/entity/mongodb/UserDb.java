@@ -1,6 +1,7 @@
 package com.test.elasticsearch.entity.mongodb;
 
 import com.test.elasticsearch.anno.AutoValue;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -27,7 +28,8 @@ public class UserDb implements Serializable {
   	@Id
 	@AutoValue
 	@Field("id")
-	private Long id;
+	@Builder.Default
+	private Long id = 0L;
 
 	/**
 	 * 手机号

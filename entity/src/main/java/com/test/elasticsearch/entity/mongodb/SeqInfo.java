@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
@@ -20,6 +21,7 @@ import javax.persistence.Id;
 @Setter
 @Getter
 @ToString
+@Entity
 @Document(collection = "sequence")
 public class SeqInfo {
 
