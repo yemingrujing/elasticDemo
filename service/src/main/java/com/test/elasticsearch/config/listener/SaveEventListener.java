@@ -42,7 +42,7 @@ public class SaveEventListener extends AbstractMongoEventListener<Object> {
                         && field.get(source) instanceof  Number
                         && Long.valueOf(field.get(source).toString()) == 0) {
                     field.set(source, getNextId(source.getClass().getSimpleName()));
-                    log.info("集合的ID为=======================", source);
+                    log.info("集合的ID为：{}", source);
                 }
             });
         }
@@ -61,7 +61,7 @@ public class SaveEventListener extends AbstractMongoEventListener<Object> {
         options.upsert(Boolean.TRUE);
         options.returnNew(Boolean.TRUE);
         SeqInfo seqInfo = mongoTemplate.findAndModify(query, update, options, SeqInfo.class);
-        log.info("collName", "集合的ID为=======================", seqInfo.getSeqId());
+        log.info(collName + "集合的ID为：{}", seqInfo.getSeqId());
         return seqInfo.getSeqId();
     }
 }
