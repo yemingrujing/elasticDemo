@@ -14,6 +14,7 @@ import java.io.Serializable;
  * @title: AddressDb
  * @projectName elasticDemo
  * @description: 地址DTO
+ * db.t_address.distinct('parent_id',{'level_type': 2}).sort()
  * @date 2019/8/621:07
  */
 @AllArgsConstructor

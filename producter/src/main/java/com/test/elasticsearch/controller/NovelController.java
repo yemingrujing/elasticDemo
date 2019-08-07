@@ -24,9 +24,9 @@ public class NovelController {
 
     private Proxy[] proxies = new Proxy[]{
             new Proxy("118.26.170.209", 8080),
-            new Proxy("114.88.30.104", 8118),
             new Proxy("111.231.93.66", 8888),
-            new Proxy("111.231.94.44", 8888)};
+            new Proxy("111.231.94.44", 8888)
+    };
 
     @Autowired
     private NovelPageProcessor novelPageProcessor;
