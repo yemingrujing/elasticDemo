@@ -98,11 +98,6 @@ public class CityProcessor implements BaseProcessor {
                 urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
             }
         } else if (page.getUrl().regex(CITY_URL).match()) {
-            baseUrl = page.getUrl().regex("^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}/").toString();
-            urlList = page.getHtml().xpath("//*[@class=\"countytr\"]/td/a/@href").all();
-//            if (CollectionUtil.isNotEmpty(urlList)) {
-//                urlList.stream().distinct().forEach( str -> page.addTargetRequest(baseUrl + str));
-//            }
             // 获取城市Code和信息
             int cityFromIdId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/(.{2,}).html").toString() + "00");
             Query query = new Query(new Criteria().and("provinceId").is(cityFromIdId));
@@ -122,14 +117,30 @@ public class CityProcessor implements BaseProcessor {
                     mongoTemplate.insert(addressDb);
                 }
             }
-//            page.addTargetRequest(baseUrl + urlList.get(1));
+            baseUrl = page.getUrl().regex("^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}/").toString();
+            urlList = page.getHtml().xpath("//*[@class=\"countytr\"]/td/a/@href").all();
+            if (CollectionUtil.isNotEmpty(urlList)) {
+                urlList.stream().distinct().forEach( str -> page.addTargetRequest(baseUrl + str));
+            }
         } else if (page.getUrl().regex(AREA_URL).match()) {
             // 获取区县Code
             int areaFormId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/\\d{1,}/(.{2,}).html").toString());
-            // 获取乡镇信息
-            List<String> townInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
-            for (int i = 0, n = townInfos.size(); i < n; i++) {
-                System.out.println(townInfos.get(i) + " " + townInfos.get(++i));
+            Query query = new Query(new Criteria().and("provinceId").is(areaFormId));
+            AddressDb areaInfo = mongoTemplate.findOne(query, AddressDb.class);
+            if (areaInfo != null) {
+                AddressDb addressDb;
+                String parentName = areaInfo.getMergeName();
+                // 获取乡镇信息
+                List<String> townInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
+                for (int i = 0, n = townInfos.size(); i < n; i++) {
+                    addressDb = AddressDb.builder()
+                            .provinceId(Integer.valueOf(townInfos.get(i).substring(0, 8)))
+                            .parentId(areaInfo.getProvinceId())
+                            .name(townInfos.get(++i))
+                            .mergeName(parentName + "," + townInfos.get(i))
+                            .levelType((short) 4).build();
+                    mongoTemplate.insert(addressDb);
+                }
             }
         }
     }
