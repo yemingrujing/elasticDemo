@@ -1,8 +1,7 @@
 package com.test.elasticsearch.entity.mongodb;
 
 import com.test.elasticsearch.anno.AutoValue;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,7 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 @Entity
 @Document(collection = "t_order")
 // 数字参数指定索引的方向，1为正序，-1为倒序

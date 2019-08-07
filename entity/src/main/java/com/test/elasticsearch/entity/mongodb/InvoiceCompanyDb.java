@@ -1,8 +1,7 @@
 package com.test.elasticsearch.entity.mongodb;
 
 import com.test.elasticsearch.anno.AutoValue;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,7 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Builder
 @Entity
 @Document(collection = "t_invoice_company")
 public class InvoiceCompanyDb implements Serializable {
