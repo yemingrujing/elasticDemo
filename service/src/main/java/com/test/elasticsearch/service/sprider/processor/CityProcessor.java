@@ -44,7 +44,7 @@ public class CityProcessor implements BaseProcessor {
 
     private Site site = Site.me()
             .setDomain("http://www.stats.gov.cn")
-            .setSleepTime(2000)
+            .setSleepTime(5000)
             .setRetryTimes(3)
             .setCharset(CharsetUtil.GBK)
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36");
@@ -54,9 +54,9 @@ public class CityProcessor implements BaseProcessor {
         List<String> urlList;
         String baseUrl;
         if (page.getUrl().regex(TJSJ_CITY_WEB_URL).match()) {
-            // 获取省份code
+            // 获取省份code列表
             List<String> provinceCodes = page.getHtml().regex("<td><a href=\\\"(.{1,30}).html\\\">.*?<br></a></td>").all();
-            // 获取省份信息
+            // 获取省份信息列表
             List<String> provinceNames = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})<br></a></td>").all();
             AddressDb addressDb;
             String parentName = "中国";
@@ -74,10 +74,6 @@ public class CityProcessor implements BaseProcessor {
                 urlList.stream().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
             }
         } else if (page.getUrl().regex(PROVINCE_URL).match()) {
-            urlList = page.getHtml().xpath("//*[@class=\"citytr\"]/td/a/@href").all();
-//            if (CollectionUtil.isNotEmpty(urlList)) {
-//                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
-//            }
             // 获取省份Code和省份信息
             int provinceFromId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/(.{2,}).html").toString() + "0000");
             Query query = new Query(new Criteria().and("provinceId").is(provinceFromId));
@@ -97,19 +93,34 @@ public class CityProcessor implements BaseProcessor {
                     mongoTemplate.insert(addressDb);
                 }
             }
-//            page.addTargetRequest(TJSJ_CITY_BASE_URL + urlList.get(2));
+            urlList = page.getHtml().xpath("//*[@class=\"citytr\"]/td/a/@href").all();
+            if (CollectionUtil.isNotEmpty(urlList)) {
+                urlList.stream().distinct().forEach( str -> page.addTargetRequest(TJSJ_CITY_BASE_URL + str));
+            }
         } else if (page.getUrl().regex(CITY_URL).match()) {
             baseUrl = page.getUrl().regex("^http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,2}/").toString();
             urlList = page.getHtml().xpath("//*[@class=\"countytr\"]/td/a/@href").all();
 //            if (CollectionUtil.isNotEmpty(urlList)) {
 //                urlList.stream().distinct().forEach( str -> page.addTargetRequest(baseUrl + str));
 //            }
-            // 获取城市Code
-            int cityFromIdId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/(.{2,}).html").toString());
+            // 获取城市Code和信息
+            int cityFromIdId = Integer.valueOf(page.getUrl().regex("http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/\\d{1,}/(.{2,}).html").toString() + "00");
+            Query query = new Query(new Criteria().and("provinceId").is(cityFromIdId));
+            AddressDb cityInfo = mongoTemplate.findOne(query, AddressDb.class);
             // 获取区县信息
             List<String> countyInfos = page.getHtml().regex("<td><a href=\\\".*?.html\\\">(.{1,30})</a></td>").all();
-            for (int i = 0, n = countyInfos.size(); i < n; i++) {
-                System.out.println(countyInfos.get(i) + " " + countyInfos.get(++i));
+            if (cityInfo != null) {
+                AddressDb addressDb;
+                String parentName = cityInfo.getMergeName();
+                for (int i = 0, n = countyInfos.size(); i < n; i++) {
+                    addressDb = AddressDb.builder()
+                            .provinceId(Integer.valueOf(countyInfos.get(i).substring(0, 6)))
+                            .parentId(cityInfo.getProvinceId())
+                            .name(countyInfos.get(++i))
+                            .mergeName(parentName + "," + countyInfos.get(i))
+                            .levelType((short) 3).build();
+                    mongoTemplate.insert(addressDb);
+                }
             }
 //            page.addTargetRequest(baseUrl + urlList.get(1));
         } else if (page.getUrl().regex(AREA_URL).match()) {
