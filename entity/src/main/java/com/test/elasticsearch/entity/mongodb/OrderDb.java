@@ -16,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity
 @Document(collection = "t_order")
 // 数字参数指定索引的方向，1为正序，-1为倒序

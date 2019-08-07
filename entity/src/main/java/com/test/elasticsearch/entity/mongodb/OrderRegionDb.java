@@ -13,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity
 @Document(collection = "t_order_region")
 public class OrderRegionDb implements Serializable {
