@@ -40,7 +40,7 @@ public class MyCnblogsSpider1 implements PageProcessor {
 
     public static void main(String[] args) {
         HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
-        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("118.26.170.209", 8080)));
+        httpClientDownloader.setProxyProvider(SimpleProxyProvider.from(new Proxy("42.159.91.248", 8080)));
         Spider.create(new MyCnblogsSpider1()).addUrl("https://www.cnblogs.com/justcooooode/").setDownloader(httpClientDownloader).thread(5)
                 .addPipeline(new ConsolePipeline()).run();
     }

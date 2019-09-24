@@ -22,11 +22,11 @@ spring:
   redis:
     database: 0
     # Redis服务器地址
-    host:
+    host: 39.105.75.88
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password:
+    password: gw123456
     jedis:
       pool:
          # 连接池最大连接数（使用负值表示没有限制）
@@ -38,7 +38,7 @@ spring:
          # 连接池中的最大空闲连接
          max-idle: 10
   rabbitmq:
-    host:
+    host: 39.105.75.88
     port: 5672
     username: yemingrujing
     password: gw123456
@@ -67,7 +67,7 @@ spring:
         multiplier: 1.0
   data:
     mongodb:
-      host:
+      host: 39.105.75.88
       username: test
       password: q123456789
       port: 27017
@@ -75,10 +75,10 @@ spring:
       repositories:
         type: auto
 elasticsearch:
-  hostname1:
+  hostname1: 39.105.75.88
   port1: 9200
-  username:
-  password:
+  username: elastic
+  password: gw123456
 # jpa日志打印sql参数
 logging:
   level:
