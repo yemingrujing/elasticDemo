@@ -34,8 +34,8 @@ public class MessageConsumer implements Runnable {
 
     public static void main(String[] args) {
         MessageConsumer messageConsumer = new MessageConsumer();
-        Thread t1 = new Thread(messageConsumer, "thread6");
-        Thread t2 = new Thread(messageConsumer, "thread7");
+        Thread t1 = new Thread(messageConsumer, "thread8");
+        Thread t2 = new Thread(messageConsumer, "thread9");
         t1.start();
         t2.start();
     }

@@ -33,12 +33,12 @@ public class MessageSubProducer extends Thread {
     }
 
     public static void main(String[] args) {
-        MessageProducer messageProducer = new MessageProducer();
-        Thread t1 = new Thread(messageProducer, "thread1");
-        Thread t2 = new Thread(messageProducer, "thread2");
-        Thread t3 = new Thread(messageProducer, "thread3");
-        Thread t4 = new Thread(messageProducer, "thread4");
-        Thread t5 = new Thread(messageProducer, "thread5");
+        MessageSubProducer producer = new MessageSubProducer();
+        Thread t1 = new Thread(producer, "thread1");
+        Thread t2 = new Thread(producer, "thread2");
+        Thread t3 = new Thread(producer, "thread3");
+        Thread t4 = new Thread(producer, "thread4");
+        Thread t5 = new Thread(producer, "thread5");
         t1.start();
         t2.start();
         t3.start();
