@@ -4,13 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.querydsl.core.QueryResults;
 import com.test.elasticsearch.config.rabbitmq.RabbitSender;
 import com.test.elasticsearch.config.rabbitmq.RabbitmqConf;
+import com.test.elasticsearch.domain.Order;
 import com.test.elasticsearch.dto.OrderDTO;
 import com.test.elasticsearch.enums.DirectEnum;
+import com.test.elasticsearch.event.OrderEvent;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.service.OrderService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +32,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
     private RabbitSender rabbitSender;
@@ -60,5 +66,10 @@ public class OrderController {
     @GetMapping("/order/mongoDB/select")
     public Result selectToMongoDB(OrderParam param) {
         return ResultUtil.success(orderService.selectToMongoDB(param));
+    }
+
+    @GetMapping("/event/order")
+    public void sendEvent() {
+        applicationContext.publishEvent(new OrderEvent(this, "订单创建", Order.builder().orderCode("120192121321312312").build()));
     }
 }
