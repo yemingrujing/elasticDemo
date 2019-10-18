@@ -1,10 +1,10 @@
 package com.test.elasticsearch.controller.designPattern;
 
-import com.test.elasticsearch.event.ContentEvent;
+import com.test.elasticsearch.domain.Order;
+import com.test.elasticsearch.event.OrderEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,8 +22,8 @@ public class ContentController {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @GetMapping("/event/{content}")
-    public void sendEvent(@PathVariable(value = "content") String content) {
-        applicationContext.publishEvent(new ContentEvent(this, content));
+    @GetMapping("/event/order")
+    public void sendEvent() {
+        applicationContext.publishEvent(new OrderEvent(this, "订单创建", Order.builder().orderCode("120192121321312312").build()));
     }
 }

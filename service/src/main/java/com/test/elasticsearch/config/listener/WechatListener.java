@@ -1,6 +1,6 @@
 package com.test.elasticsearch.config.listener;
 
-import com.test.elasticsearch.event.ContentEvent;
+import com.test.elasticsearch.event.OrderEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -9,19 +9,19 @@ import org.springframework.stereotype.Component;
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.config.listener
- * @ClassName: ContentListener
+ * @ClassName: WechatListener
  * @Author: guang
- * @Description: 定义事件监听(接收者)
- * @Date: 2019/10/17 19:03
+ * @Description: 微信监听器
+ * @Date: 2019/10/18 13:45
  * @Version: 1.0
  */
 @Component
 @Slf4j
-public class ContentListener {
+public class WechatListener {
 
     @Async
     @EventListener
-    public void handler(ContentEvent contentEvent) {
-        log.info("收到消息：" + contentEvent.getContent());
+    public void handle(OrderEvent orderEvent) {
+        log.info("微信通知成功，订单号" + orderEvent.getOrder().getOrderCode() + "创建成功！");
     }
 }

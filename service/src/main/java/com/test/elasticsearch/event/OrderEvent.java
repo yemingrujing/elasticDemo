@@ -1,5 +1,6 @@
 package com.test.elasticsearch.event;
 
+import com.test.elasticsearch.domain.Order;
 import lombok.Data;
 import org.springframework.context.ApplicationEvent;
 
@@ -13,25 +14,32 @@ import org.springframework.context.ApplicationEvent;
  * @Version: 1.0
  */
 @Data
-public class ContentEvent extends ApplicationEvent {
+public class OrderEvent extends ApplicationEvent {
 
     /**
      * 抽象主题内容（注册用户对象）
      */
-    private String content;
+    private String name;
 
-    public ContentEvent(Object source) {
+    /**
+     * 订单
+     */
+    private Order order;
+
+    public OrderEvent(Object source) {
         super(source);
     }
 
     /**
      * 重写构造函数
      * @param source 发生事件的对象
-     * @param content 注册用户对象
+     * @param name 操作名称
+     * @param name 消息参数
      */
-    public ContentEvent(Object source, String content) {
+    public OrderEvent(Object source, String name, Order order) {
         super(source);
-        this.content = content;
+        this.name = name;
+        this.order = order;
     }
 
     @Override
