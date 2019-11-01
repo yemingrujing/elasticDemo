@@ -1,4 +1,4 @@
-package com.test.elasticsearch.service.impl;
+package com.test.elasticsearch.service.wechat.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.wenhao.jpa.PredicateBuilder;
