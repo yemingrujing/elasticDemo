@@ -13,7 +13,7 @@ import com.test.elasticsearch.dto.OrderDTO;
 import com.test.elasticsearch.entity.mongodb.OrderDb;
 import com.test.elasticsearch.entity.mysql.OrderEntity;
 import com.test.elasticsearch.entity.mysql.QOrderEntity;
-import com.test.elasticsearch.entity.mysql.QUserEntity;
+import com.test.elasticsearch.entity.mysql.wechat.QUserEntity;
 import com.test.elasticsearch.param.OrderParam;
 import com.test.elasticsearch.repository.mongodb.OrderMBRepository;
 import com.test.elasticsearch.repository.mysql.OrderRepository;
@@ -70,8 +70,6 @@ public class OrderServiceImpl implements OrderService {
                 Projections.bean(
                         OrderDTO.class,
                         orderEntity.id,
-                        userEntity.phone,
-                        userEntity.nickName,
                         orderEntity.orderCode,
                         orderEntity.totalFee,
                         orderEntity.createTime
@@ -81,9 +79,6 @@ public class OrderServiceImpl implements OrderService {
                 .leftJoin(userEntity).on(orderEntity.userId.eq(userEntity.id));
         if (StrUtil.isNotBlank(param.getOrderCode())) {
             query.where(orderEntity.orderCode.like("%" + param.getOrderCode() + "%"));
-        }
-        if (StrUtil.isNotBlank(param.getPhone())) {
-            query.where(userEntity.phone.like("%" + param.getPhone() + "%"));
         }
         if (param.getOrderType() != null) {
             query.where(orderEntity.orderType.eq(param.getOrderType()));
