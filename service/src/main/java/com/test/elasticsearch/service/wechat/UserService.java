@@ -1,6 +1,6 @@
-package com.test.elasticsearch.service;
+package com.test.elasticsearch.service.wechat;
 
-import com.test.elasticsearch.entity.mysql.UserEntity;
+import com.test.elasticsearch.entity.mysql.wechat.UserEntity;
 
 import java.util.List;
 

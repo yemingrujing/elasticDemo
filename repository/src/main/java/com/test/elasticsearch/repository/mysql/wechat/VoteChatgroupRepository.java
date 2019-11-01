@@ -1,16 +1,16 @@
-package com.test.elasticsearch.repository.mysql;
+package com.test.elasticsearch.repository.mysql.wechat;
 
-import com.test.elasticsearch.entity.mysql.VoteTaskEntity;
+import com.test.elasticsearch.entity.mysql.wechat.VoteChatgroupEntity;
 import com.test.elasticsearch.repository.mysql.base.BaseJPA;
 
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.repository.mysql
- * @ClassName: VoteTaskRepository
+ * @ClassName: VoteChatgroupRepository
  * @Author: guang
  * @Description: ${description}
  * @Date: 2019/11/1 17:55
  * @Version: 1.0
  */
-public interface VoteTaskRepository extends BaseJPA<VoteTaskEntity> {
+public interface VoteChatgroupRepository extends BaseJPA<VoteChatgroupEntity> {
 }

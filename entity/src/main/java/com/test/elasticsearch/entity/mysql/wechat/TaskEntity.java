@@ -1,4 +1,4 @@
-package com.test.elasticsearch.entity.mysql;
+package com.test.elasticsearch.entity.mysql.wechat;
 
 import lombok.Data;
 

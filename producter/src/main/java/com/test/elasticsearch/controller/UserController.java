@@ -1,7 +1,7 @@
 package com.test.elasticsearch.controller;
 
-import com.test.elasticsearch.entity.mysql.UserEntity;
-import com.test.elasticsearch.service.UserService;
+import com.test.elasticsearch.entity.mysql.wechat.UserEntity;
+import com.test.elasticsearch.service.wechat.UserService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;

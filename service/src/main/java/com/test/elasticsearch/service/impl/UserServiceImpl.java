@@ -3,9 +3,9 @@ package com.test.elasticsearch.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.github.wenhao.jpa.PredicateBuilder;
 import com.github.wenhao.jpa.Specifications;
-import com.test.elasticsearch.entity.mysql.UserEntity;
-import com.test.elasticsearch.repository.mysql.UserRepository;
-import com.test.elasticsearch.service.UserService;
+import com.test.elasticsearch.entity.mysql.wechat.UserEntity;
+import com.test.elasticsearch.repository.mysql.wechat.UserRepository;
+import com.test.elasticsearch.service.wechat.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

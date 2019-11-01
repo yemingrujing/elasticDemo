@@ -1,6 +1,6 @@
-package com.test.elasticsearch.repository.mysql;
+package com.test.elasticsearch.repository.mysql.wechat;
 
-import com.test.elasticsearch.entity.mysql.NoticeChatgroupEntity;
+import com.test.elasticsearch.entity.mysql.wechat.NoticeChatgroupEntity;
 import com.test.elasticsearch.repository.mysql.base.BaseJPA;
 
 /**
