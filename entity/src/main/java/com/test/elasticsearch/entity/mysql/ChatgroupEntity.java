@@ -7,17 +7,15 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "t_user")
-public class UserEntity implements Serializable {
+@Table(name = "t_chatgroup")
+public class ChatgroupEntity implements Serializable {
 
   	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
+	private String groupid;
+
 	private String taskid;
-
-	private String userid;
-
-	private String viewerid;
 
 }
