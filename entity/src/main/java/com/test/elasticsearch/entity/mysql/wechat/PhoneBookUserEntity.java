@@ -7,14 +7,15 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "t_phoneBook_user")
-public class PhonebookUserEntity implements Serializable {
+@Table(name = "t_phone_book_user")
+public class PhoneBookUserEntity implements Serializable {
 
   	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String openid;
+	@Column(name = "open_id")
+	private String openId;
 
 	private String name;
 
@@ -24,7 +25,7 @@ public class PhonebookUserEntity implements Serializable {
 
 	private String remark;
 
-	@Column(name = "gId")
-	private String gid;
+	@Column(name = "g_id")
+	private String gId;
 
 }

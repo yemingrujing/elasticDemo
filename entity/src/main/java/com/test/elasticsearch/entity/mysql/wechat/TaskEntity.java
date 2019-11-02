@@ -14,9 +14,11 @@ public class TaskEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String openid;
+	@Column(name = "open_id")
+	private String openId;
 
-	private String taskid;
+	@Column(name = "task_id")
+	private String taskId;
 
 	private String title;
 

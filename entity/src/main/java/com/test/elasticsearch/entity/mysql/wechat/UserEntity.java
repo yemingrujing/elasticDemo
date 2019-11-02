@@ -14,10 +14,13 @@ public class UserEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String taskid;
+	@Column(name = "task_id")
+	private String taskId;
 
-	private String userid;
+	@Column(name = "user_id")
+	private String userId;
 
-	private String viewerid;
+	@Column(name = "viewer_id")
+	private String viewerId;
 
 }

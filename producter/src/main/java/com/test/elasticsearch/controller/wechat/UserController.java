@@ -1,4 +1,4 @@
-package com.test.elasticsearch.controller;
+package com.test.elasticsearch.controller.wechat;
 
 import com.test.elasticsearch.entity.mysql.wechat.UserEntity;
 import com.test.elasticsearch.service.wechat.UserService;

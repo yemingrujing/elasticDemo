@@ -14,8 +14,10 @@ public class VoteChatgroupEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String groupid;
+	@Column(name = "group_id")
+	private String groupId;
 
-	private String voteid;
+	@Column(name = "vote_id")
+	private String voteId;
 
 }

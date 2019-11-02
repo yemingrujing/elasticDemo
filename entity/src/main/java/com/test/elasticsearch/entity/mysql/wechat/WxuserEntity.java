@@ -14,41 +14,42 @@ public class WxuserEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String openid;
+	@Column(name = "open_id")
+	private String openId;
 
-	@Column(name = "AppID")
-	private String appid;
+	@Column(name = "app_id")
+	private String appId;
 
-	@Column(name = "arcID")
-	private String arcid;
+	@Column(name = "arc_id")
+	private String arcId;
 
-	@Column(name = "avatarUrl")
-	private String avatarurl;
+	@Column(name = "avatar_url")
+	private String avatarUrl;
 
 	private String city;
 
 	private String language;
 
-	@Column(name = "nickName")
-	private String nickname;
+	@Column(name = "nick_name")
+	private String nickName;
 
 	private String province;
 
-	@Column(name = "telNumber")
-	private String telnumber;
+	@Column(name = "tel_number")
+	private String telNumber;
 
-	@Column(name = "uName")
-	private String uname;
+	@Column(name = "u_name")
+	private String uName;
 
 	private String time;
 
-	@Column(name = "joinerName")
-	private String joinername;
+	@Column(name = "joiner_name")
+	private String joinerName;
 
-	@Column(name = "joinerTel")
-	private String joinertel;
+	@Column(name = "joiner_tel")
+	private String joinerTel;
 
-	@Column(name = "joinerRemark")
-	private String joinerremark;
+	@Column(name = "joiner_remark")
+	private String joinerRemark;
 
 }

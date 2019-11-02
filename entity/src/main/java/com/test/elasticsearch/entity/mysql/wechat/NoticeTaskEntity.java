@@ -14,14 +14,16 @@ public class NoticeTaskEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String openid;
+	@Column(name = "open_id")
+	private String openId;
 
-	private String noticeid;
+	@Column(name = "notice_id")
+	private String noticeId;
 
 	private String date;
 
-	@Column(name = "fileNumber")
-	private String filenumber;
+	@Column(name = "file_number")
+	private String fileNumber;
 
 	private String title;
 

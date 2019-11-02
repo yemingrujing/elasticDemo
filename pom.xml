@@ -34,7 +34,7 @@
         <elasticsearch.version>7.0.1</elasticsearch.version>
         <spring.boot.starter.data.version>2.1.8.RELEASE</spring.boot.starter.data.version>
         <com.google.guava.version>28.1-jre</com.google.guava.version>
-        <cn.hutool.version>4.6.6</cn.hutool.version>
+        <cn.hutool.version>5.0.4</cn.hutool.version>
         <mysql.connector.java.version>8.0.16</mysql.connector.java.version>
         <org.projectlombok.version>1.18.8</org.projectlombok.version>
         <net.logstash.logback.version>5.3</net.logstash.logback.version>

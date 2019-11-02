@@ -4,14 +4,17 @@ import cn.hutool.core.util.CharsetUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,30 @@ public class HttpUtil {
     public static final int DEF_READ_TIMEOUT = 30000;
 
     public static final int DEF_CONN_REQ_TIMEOUT = 10000;
+
+    public static String get(String url) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response;
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(DEF_CONN_TIMEOUT)
+                .setSocketTimeout(DEF_READ_TIMEOUT).setConnectionRequestTimeout(DEF_CONN_REQ_TIMEOUT).build();
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.setConfig(requestConfig);
+        try {
+            // 返回请求执行结果
+            response = httpClient.execute(httpGet);
+            // 获取返回的状态值
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_OK) {
+                return null;
+            } else {
+                String result = EntityUtils.toString(response.getEntity(),  CharsetUtil.UTF_8);
+                return result;
+            }
+        } catch (IOException e) {
+            log.error("HttpUtil Request Failure：{}" + ExceptionUtils.getStackTrace(e),  url);
+            throw new RuntimeException("Http请求发送失败");
+        }
+    }
 
     public static <T, E extends List> T urlPost(String url, E reqData, Map<String, String> headers, Class<T> returnClass) {
         CloseableHttpClient httpClient = HttpClients.createDefault();

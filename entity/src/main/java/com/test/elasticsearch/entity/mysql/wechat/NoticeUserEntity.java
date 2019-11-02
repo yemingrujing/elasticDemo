@@ -14,8 +14,10 @@ public class NoticeUserEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String noticeid;
+	@Column(name = "notice_id")
+	private String noticeId;
 
-	private String userid;
+	@Column(name = "user_id")
+	private String userId;
 
 }

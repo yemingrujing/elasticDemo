@@ -14,8 +14,10 @@ public class VoteUserEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String voteid;
+	@Column(name = "vote_id")
+	private String voteId;
 
-	private String userid;
+	@Column(name = "user_id")
+	private String userId;
 
 }

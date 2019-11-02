@@ -14,23 +14,25 @@ public class VoteTaskEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String openid;
+	@Column(name = "open_id")
+	private String openId;
 
-	private String voteid;
+	@Column(name = "vote_id")
+	private String voteId;
 
 	private String title;
 
 	private String description;
 
-	@Column(name = "optionData")
-	private String optiondata;
+	@Column(name = "option_data")
+	private String optionData;
 
 	private String date;
 
 	private String time;
 
-	@Column(name = "noName")
-	private String noname;
+	@Column(name = "no_name")
+	private String noName;
 
 	private Integer radio;
 

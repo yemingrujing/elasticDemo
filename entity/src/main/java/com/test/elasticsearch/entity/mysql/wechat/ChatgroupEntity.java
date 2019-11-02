@@ -14,8 +14,10 @@ public class ChatgroupEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
-	private String groupid;
+	@Column(name = "group_id")
+	private String groupId;
 
-	private String taskid;
+	@Column(name = "task_id")
+	private String taskId;
 
 }
