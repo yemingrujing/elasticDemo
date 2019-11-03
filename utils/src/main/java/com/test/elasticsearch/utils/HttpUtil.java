@@ -37,7 +37,7 @@ public class HttpUtil {
 
     public static final int DEF_CONN_REQ_TIMEOUT = 10000;
 
-    public static String get(String url) {
+    public static <T> T get(String url, Class<T> returnClass) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response;
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(DEF_CONN_TIMEOUT)
@@ -53,7 +53,8 @@ public class HttpUtil {
                 return null;
             } else {
                 String result = EntityUtils.toString(response.getEntity(),  CharsetUtil.UTF_8);
-                return result;
+                log.info("result: {}", result);
+                return  JSON.parseObject(result, returnClass);
             }
         } catch (IOException e) {
             log.error("HttpUtil Request Failure：{}" + ExceptionUtils.getStackTrace(e),  url);
