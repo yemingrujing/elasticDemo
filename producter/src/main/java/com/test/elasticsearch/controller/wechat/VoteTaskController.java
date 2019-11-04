@@ -5,9 +5,7 @@ import com.test.elasticsearch.service.wechat.VoteTaskService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ProjectName: elasticsearch
@@ -27,6 +25,19 @@ public class VoteTaskController {
     @PostMapping("/application/vote/createVoteTask")
     public Result createVoteTask(@RequestBody VoteTaskParam param) {
         voteTaskService.createVoteTask(param);
+        return ResultUtil.success();
+    }
+
+    @GetMapping("/application/vote/getVoteTask")
+    public Result getVoteTask(@RequestParam String voteId) {
+        return ResultUtil.success(voteTaskService.getVoteTask(voteId));
+    }
+
+    @PostMapping("/application/vote/storeVoteOne")
+    public Result storeVoteOne(@RequestParam String voteId,
+                               @RequestParam String optionData,
+                               @RequestParam String openId) {
+        voteTaskService.storeVoteOne(voteId, optionData, openId);
         return ResultUtil.success();
     }
 }

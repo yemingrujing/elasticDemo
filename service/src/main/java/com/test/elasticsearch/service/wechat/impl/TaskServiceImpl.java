@@ -94,10 +94,10 @@ public class TaskServiceImpl implements TaskService {
                         voteTaskEntity.radio
                 )
         )
-                .from(voteTaskEntity)
-                .leftJoin(voteUserEntity)
-                .on(voteTaskEntity.voteId.eq(voteUserEntity.voteId))
-                .where(voteTaskEntity.openId.eq(openId));
+                .from(voteUserEntity)
+                .leftJoin(voteTaskEntity)
+                .on(voteUserEntity.voteId.eq(voteTaskEntity.voteId))
+                .where(voteUserEntity.userId.eq(openId));
         return query.fetchResults().getResults();
     }
 
