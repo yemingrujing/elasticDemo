@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class MyCreateDTO {
+public class MyLinkCreateDTO {
 
     private Integer id;
 

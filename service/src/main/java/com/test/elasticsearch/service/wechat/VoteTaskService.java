@@ -1,5 +1,7 @@
 package com.test.elasticsearch.service.wechat;
 
+import com.test.elasticsearch.param.wechat.VoteTaskParam;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.service.wechat
@@ -10,4 +12,6 @@ package com.test.elasticsearch.service.wechat;
  * @Version: 1.0
  */
 public interface VoteTaskService {
+
+    void createVoteTask(VoteTaskParam param);
 }

@@ -1,6 +1,7 @@
 package com.test.elasticsearch.service.wechat;
 
 import com.alibaba.fastjson.JSONObject;
+import com.test.elasticsearch.param.wechat.UserDataParam;
 
 /**
  * @ProjectName: elasticsearch
@@ -28,16 +29,10 @@ public interface WxuserService {
     /**
      * 将登陆的用户详情信息存储到数据库
      * @author  GuangWei
-     * @param openid 用户唯一标识
-     * @param avatarUrl 用户信息：图像
-     * @param city 用户信息：所在城市
-     * @param gender 用户信息：性别。0:未知，1：男，2：女
-     * @param language 用户信息：语言
-     * @param nickName 用户信息：姓名
-     * @param province 用户信息：省份
+     * @param param
      * @return  void
      * @exception  
      * @date       2019/11/2 21:57
      */
-    void userDataSave(String openid, String avatarUrl, String city, String gender, String language, String nickName, String province);
+    void userDataSave(UserDataParam param);
 }

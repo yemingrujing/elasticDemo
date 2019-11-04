@@ -4,11 +4,8 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.github.wenhao.jpa.PredicateBuilder;
-import com.github.wenhao.jpa.Specifications;
-import com.querydsl.core.types.Predicate;
-import com.test.elasticsearch.entity.mysql.OrderEntity;
 import com.test.elasticsearch.entity.mysql.wechat.WxuserEntity;
+import com.test.elasticsearch.param.wechat.UserDataParam;
 import com.test.elasticsearch.repository.mysql.wechat.WxuserRepository;
 import com.test.elasticsearch.service.wechat.WxuserService;
 import com.test.elasticsearch.utils.HttpUtil;
@@ -17,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -54,16 +52,16 @@ public class WxuserServiceImpl implements WxuserService {
     }
 
     @Override
-    public void userDataSave(String openid, String avatarUrl, String city, String gender, String language, String nickName, String province) {
-        if (StrUtil.isNotBlank(openid)) {
-            Optional<WxuserEntity> optional = wxuserRepository.findOne(Example.of(WxuserEntity.builder().openId(openid).build()));
+    public void userDataSave(UserDataParam param) {
+        if (Objects.nonNull(param) && StrUtil.isNotBlank(param.getOpenid())) {
+            Optional<WxuserEntity> optional = wxuserRepository.findOne(Example.of(WxuserEntity.builder().openId(param.getOpenid()).build()));
             if (optional.isPresent()) {
                 WxuserEntity wxuserEntity = optional.get();
-                wxuserEntity.setAvatarUrl(avatarUrl);
-                wxuserEntity.setCity(city);
-                wxuserEntity.setLanguage(language);
-                wxuserEntity.setNickName(nickName);
-                wxuserEntity.setProvince(province);
+                wxuserEntity.setAvatarUrl(param.getAvatarUrl());
+                wxuserEntity.setCity(param.getCity());
+                wxuserEntity.setLanguage(param.getLanguage());
+                wxuserEntity.setNickName(param.getNickName());
+                wxuserEntity.setProvince(param.getProvince());
                 wxuserEntity.setTime(DateUtil.format(DateUtil.date(), DatePattern.NORM_DATETIME_PATTERN));
                 wxuserRepository.save(wxuserEntity);
             }

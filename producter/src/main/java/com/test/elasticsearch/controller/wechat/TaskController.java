@@ -21,17 +21,17 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping("/application/vote/getMyJoin")
-    public Result getMyJoin(String openId) {
-        return ResultUtil.success(taskService.getMyJoin(openId));
+    public Result getMyVoteJoin(String openId) {
+        return ResultUtil.success(taskService.getMyVoteJoin(openId));
     }
 
     @GetMapping("/application/vote/getMyCreate")
-    public Result getMyCreate(String openId) {
-        return ResultUtil.success(taskService.getMyCreate(openId));
+    public Result getMyVoteCreate(String openId) {
+        return ResultUtil.success(taskService.getMyVoteCreate(openId));
     }
 
     @GetMapping("/application/vote/getGIDTask")
-    public Result getGIDTask(String groupId) {
-        return ResultUtil.success(taskService.getGIDTask(groupId));
+    public Result getVoteGIDTask(String groupId) {
+        return ResultUtil.success(taskService.getVoteGIDTask(groupId));
     }
 }

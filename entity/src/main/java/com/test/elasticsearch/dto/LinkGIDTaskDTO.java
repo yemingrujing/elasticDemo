@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class GIDTaskDTO {
+public class LinkGIDTaskDTO {
 
     private Integer id;
 

@@ -1,8 +1,6 @@
 package com.test.elasticsearch.service.wechat;
 
-import com.test.elasticsearch.dto.GIDTaskDTO;
-import com.test.elasticsearch.dto.MyCreateDTO;
-import com.test.elasticsearch.dto.MyJoinDTO;
+import com.test.elasticsearch.dto.*;
 
 import java.util.List;
 
@@ -25,7 +23,8 @@ public interface TaskService {
      * @exception
      * @date       2019/11/3 22:55
      */
-    List<MyJoinDTO> getMyJoin(String openId);
+    List<MyLinkJoinDTO> getMyLinkJoin(String openId);
+    List<MyVoteJoinDTO> getMyVoteJoin(String openId);
 
     /**
      * 请求我创建的接龙列表
@@ -35,7 +34,8 @@ public interface TaskService {
      * @exception
      * @date       2019/11/3 22:55
      */
-    List<MyCreateDTO> getMyCreate(String openId);
+    List<MyLinkCreateDTO> getMyLinkCreate(String openId);
+    List<MyVoteCreateDTO> getMyVoteCreate(String openId);
 
     /**
      * 请求我创建的接龙列表
@@ -45,5 +45,6 @@ public interface TaskService {
      * @exception
      * @date       2019/11/3 22:55
      */
-    List<GIDTaskDTO> getGIDTask(String groupId);
+    List<LinkGIDTaskDTO> getLinkGIDTask(String groupId);
+    List<VoteGIDTaskDTO> getVoteGIDTask(String groupId);
 }

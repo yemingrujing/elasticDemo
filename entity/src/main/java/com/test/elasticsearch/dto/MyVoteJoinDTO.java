@@ -3,6 +3,8 @@ package com.test.elasticsearch.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+
 /**
  * @author guang
  * @title: MyJoinDTO
@@ -12,29 +14,27 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class MyJoinDTO {
+public class MyVoteJoinDTO {
 
     private Integer id;
 
-    private String taskId;
-
     private String userId;
-
-    private String viewerId;
 
     private String openId;
 
+    private String voteId;
+
     private String title;
+
+    private String description;
+
+    private String optionData;
 
     private String date;
 
     private String time;
 
-    private String address;
+    private String noName;
 
-    private String name;
-
-    private String tel;
-
-    private String remark;
+    private Integer radio;
 }
