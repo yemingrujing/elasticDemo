@@ -29,6 +29,7 @@ import java.util.Optional;
 public class WxuserServiceImpl implements WxuserService {
 
     public static String getOpenIdUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
+    public static String getAccessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
     @Autowired
     private WxuserRepository wxuserRepository;
@@ -66,6 +67,16 @@ public class WxuserServiceImpl implements WxuserService {
                 wxuserRepository.save(wxuserEntity);
             }
         }
+    }
+
+    @Override
+    public JSONObject getAccessToken(String appid, String secret) {
+        if (StrUtil.isNotBlank(appid) && StrUtil.isNotBlank(secret)) {
+            String url = getAccessTokenUrl.replace("APPID", appid).replace("APPSECRET", secret);
+            JSONObject jsonObject = HttpUtil.get(url, JSONObject.class);
+            return jsonObject;
+        }
+        return null;
     }
 
 

@@ -35,4 +35,15 @@ public interface WxuserService {
      * @date       2019/11/2 21:57
      */
     void userDataSave(UserDataParam param);
+
+    /**
+     * 获取AccessToken
+     * @author  GuangWei
+     * @param appid 小程序 appId
+     * @param secret 小程序 appSecret
+     * @return  java.lang.String
+     * @exception
+     * @date       2019/11/2 14:13
+     */
+    JSONObject getAccessToken(String appid, String secret);
 }

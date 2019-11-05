@@ -32,4 +32,10 @@ public class WxuserController {
         wxuserService.userDataSave(param);
         return ResultUtil.success();
     }
+
+    @GetMapping("/application/link/getAccessToken")
+    public Result getAccessToken(@RequestParam String appid,
+                                 @RequestParam String secret) {
+        return ResultUtil.success(wxuserService.getAccessToken(appid, secret));
+    }
 }
