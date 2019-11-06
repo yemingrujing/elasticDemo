@@ -1,12 +1,11 @@
 package com.test.elasticsearch.controller.wechat;
 
+import com.test.elasticsearch.param.wechat.NoticeTaskParam;
 import com.test.elasticsearch.service.wechat.NoticeTaskService;
 import com.test.elasticsearch.utils.Result;
 import com.test.elasticsearch.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ProjectName: elasticsearch
@@ -26,5 +25,11 @@ public class NoticeTaskController {
     @GetMapping("/application/notice/myCreate")
     private Result myCreate(@RequestParam String openId) {
         return ResultUtil.success(noticeTaskService.getMyCreateNotice(openId));
+    }
+
+    @PostMapping("/application/notice/createNoticeTask")
+    private Result createNoticeTask(@RequestBody NoticeTaskParam param) {
+        noticeTaskService.createNoticeTask(param);
+        return ResultUtil.success();
     }
 }

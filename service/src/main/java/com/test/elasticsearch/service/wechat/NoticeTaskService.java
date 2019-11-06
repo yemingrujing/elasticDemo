@@ -1,6 +1,7 @@
 package com.test.elasticsearch.service.wechat;
 
 import com.test.elasticsearch.dto.wechat.NoticeTaskDTO;
+import com.test.elasticsearch.param.wechat.NoticeTaskParam;
 
 import java.util.List;
 
@@ -15,5 +16,23 @@ import java.util.List;
  */
 public interface NoticeTaskService {
 
+    /**
+     * 查询创建的通知任务
+     * @param openId
+     * @return
+     */
     List<NoticeTaskDTO> getMyCreateNotice(String openId);
+
+    /**
+     * 创建通知任务
+     * @param param
+     */
+    void createNoticeTask(NoticeTaskParam param);
+
+    /**
+     * 群通知任务的详情数据
+     * @param noticeId
+     * @return
+     */
+    List<NoticeTaskDTO> getNoticeTask(String noticeId);
 }

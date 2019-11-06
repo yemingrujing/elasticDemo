@@ -1,5 +1,6 @@
 package com.test.elasticsearch.service.wechat;
 
+import com.test.elasticsearch.dto.wechat.AllViewerDTO;
 import com.test.elasticsearch.dto.wechat.NoticeViewDTO;
 
 import java.util.List;
@@ -16,4 +17,8 @@ import java.util.List;
 public interface NoticeUserService {
 
     List<NoticeViewDTO> getMyView(String openId);
+
+    void storeViewerInfor(String openId, String noticeId);
+
+    List<AllViewerDTO> getAllViewer(String noticeId);
 }
