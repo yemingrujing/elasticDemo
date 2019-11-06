@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service.wechat;
 
-import com.test.elasticsearch.dto.MyVoteCreateDTO;
+import com.test.elasticsearch.dto.wechat.MyVoteCreateDTO;
 import com.test.elasticsearch.param.wechat.VoteTaskParam;
 
 import java.util.List;

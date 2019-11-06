@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service.wechat;
 
-import com.test.elasticsearch.dto.*;
+import com.test.elasticsearch.dto.wechat.*;
 
 import java.util.List;
 

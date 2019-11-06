@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.test.elasticsearch.dto.*;
+import com.test.elasticsearch.dto.wechat.*;
 import com.test.elasticsearch.entity.mysql.wechat.*;
 import com.test.elasticsearch.repository.mysql.wechat.TaskRepository;
 import com.test.elasticsearch.service.wechat.TaskService;
@@ -36,7 +36,7 @@ public class TaskServiceImpl implements TaskService {
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
-    public void initFactory() {
+    private void initFactory() {
         queryFactory = new JPAQueryFactory(entityManager);
     }
 

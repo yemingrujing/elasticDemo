@@ -1,5 +1,9 @@
 package com.test.elasticsearch.service.wechat;
 
+import com.test.elasticsearch.dto.wechat.NoticeViewDTO;
+
+import java.util.List;
+
 /**
  * @ProjectName: elasticsearch
  * @Package: com.test.elasticsearch.service.wechat
@@ -10,4 +14,6 @@ package com.test.elasticsearch.service.wechat;
  * @Version: 1.0
  */
 public interface NoticeUserService {
+
+    List<NoticeViewDTO> getMyView(String openId);
 }

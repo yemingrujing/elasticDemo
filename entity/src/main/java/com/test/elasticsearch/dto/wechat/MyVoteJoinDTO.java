@@ -1,4 +1,4 @@
-package com.test.elasticsearch.dto;
+package com.test.elasticsearch.dto.wechat;
 
 import lombok.Getter;
 import lombok.Setter;

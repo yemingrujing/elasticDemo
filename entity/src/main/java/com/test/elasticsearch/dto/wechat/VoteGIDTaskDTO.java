@@ -1,4 +1,4 @@
-package com.test.elasticsearch.dto;
+package com.test.elasticsearch.dto.wechat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,27 +12,27 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class LinkGIDTaskDTO {
+public class VoteGIDTaskDTO {
 
     private Integer id;
 
     private String groupId;
 
-    private String taskId;
-
     private String openId;
 
+    private String voteId;
+
     private String title;
+
+    private String description;
+
+    private String optionData;
 
     private String date;
 
     private String time;
 
-    private String address;
+    private String noName;
 
-    private String name;
-
-    private String tel;
-
-    private String remark;
+    private Integer radio;
 }

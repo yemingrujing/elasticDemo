@@ -1,24 +1,28 @@
-package com.test.elasticsearch.dto;
+package com.test.elasticsearch.dto.wechat;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author guang
- * @title: MyCreateDTO
+ * @title: MyJoinDTO
  * @projectName elasticDemo
  * @description: TODO
- * @date 2019/11/323:06
+ * @date 2019/11/322:47
  */
 @Setter
 @Getter
-public class MyLinkCreateDTO {
+public class MyLinkJoinDTO {
 
     private Integer id;
 
-    private String openId;
-
     private String taskId;
+
+    private String userId;
+
+    private String viewerId;
+
+    private String openId;
 
     private String title;
 

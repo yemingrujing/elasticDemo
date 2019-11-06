@@ -3,7 +3,7 @@ package com.test.elasticsearch.service.wechat.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
-import com.test.elasticsearch.dto.MyVoteCreateDTO;
+import com.test.elasticsearch.dto.wechat.MyVoteCreateDTO;
 import com.test.elasticsearch.entity.mysql.wechat.VoteTaskEntity;
 import com.test.elasticsearch.entity.mysql.wechat.VoteUserEntity;
 import com.test.elasticsearch.param.wechat.VoteTaskParam;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @ProjectName: elasticsearch

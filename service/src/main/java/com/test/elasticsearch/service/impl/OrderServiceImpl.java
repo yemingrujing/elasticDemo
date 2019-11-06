@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
     private MongoTemplate mongoTemplate;
 
     @PostConstruct
-    public void initFactory() {
+    private void initFactory() {
         queryFactory = new JPAQueryFactory(entityManager);
     }
 
