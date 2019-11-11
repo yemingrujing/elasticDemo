@@ -14,7 +14,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class NoticeGIDTask {
+public class NoticeGIDTaskDTO {
 
     private Integer id;
 

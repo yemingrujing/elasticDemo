@@ -1,11 +1,19 @@
 package com.test.elasticsearch.service.wechat.impl;
 
-import com.test.elasticsearch.dto.wechat.NoticeGIDTask;
+import cn.hutool.core.util.StrUtil;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.test.elasticsearch.dto.wechat.NoticeGIDTaskDTO;
+import com.test.elasticsearch.entity.mysql.wechat.QNoticeChatgroupEntity;
+import com.test.elasticsearch.entity.mysql.wechat.QNoticeTaskEntity;
 import com.test.elasticsearch.repository.mysql.wechat.NoticeChatgroupRepository;
 import com.test.elasticsearch.service.wechat.NoticeChatgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -23,13 +31,47 @@ public class NoticeChatgroupServiceImpl implements NoticeChatgroupService {
     @Autowired
     private NoticeChatgroupRepository noticeChatgroupRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    // JPA查询工厂
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    private void initFactory() {
+        queryFactory = new JPAQueryFactory(entityManager);
+    }
+
     @Override
     public void storeNoticeGId(String noticeId, String groupId) {
 
     }
 
     @Override
-    public List<NoticeGIDTask> getGIDTask(String groupId) {
-        return null;
+    public List<NoticeGIDTaskDTO> getGIDTask(String groupId) {
+        if (StrUtil.isNotBlank(groupId)) {
+            return null;
+        }
+        QNoticeChatgroupEntity noticeChatgroupEntity = QNoticeChatgroupEntity.noticeChatgroupEntity;
+        QNoticeTaskEntity noticeTaskEntity = QNoticeTaskEntity.noticeTaskEntity;
+        JPAQuery<NoticeGIDTaskDTO> query = queryFactory.select(
+                Projections.bean(
+                        NoticeGIDTaskDTO.class,
+                        noticeChatgroupEntity.id,
+                        noticeChatgroupEntity.groupId,
+                        noticeChatgroupEntity.noticeId,
+                        noticeTaskEntity.openId,
+                        noticeTaskEntity.date,
+                        noticeTaskEntity.fileNumber,
+                        noticeTaskEntity.title,
+                        noticeTaskEntity.description,
+                        noticeTaskEntity.name
+                )
+        )
+                .from(noticeChatgroupEntity)
+                .leftJoin(noticeTaskEntity)
+                .on(noticeChatgroupEntity.noticeId.eq(noticeTaskEntity.noticeId))
+                .where(noticeChatgroupEntity.groupId.eq(groupId));
+        return query.fetchResults().getResults();
     }
 }

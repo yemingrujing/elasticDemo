@@ -1,6 +1,6 @@
 package com.test.elasticsearch.service.wechat;
 
-import com.test.elasticsearch.dto.wechat.NoticeGIDTask;
+import com.test.elasticsearch.dto.wechat.NoticeGIDTaskDTO;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface NoticeChatgroupService {
 
     void storeNoticeGId(String noticeId, String groupId);
 
-    List<NoticeGIDTask> getGIDTask(String groupId);
+    List<NoticeGIDTaskDTO> getGIDTask(String groupId);
 }
