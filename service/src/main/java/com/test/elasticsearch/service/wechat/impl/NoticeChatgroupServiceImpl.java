@@ -5,11 +5,13 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.test.elasticsearch.dto.wechat.NoticeGIDTaskDTO;
+import com.test.elasticsearch.entity.mysql.wechat.NoticeChatgroupEntity;
 import com.test.elasticsearch.entity.mysql.wechat.QNoticeChatgroupEntity;
 import com.test.elasticsearch.entity.mysql.wechat.QNoticeTaskEntity;
 import com.test.elasticsearch.repository.mysql.wechat.NoticeChatgroupRepository;
 import com.test.elasticsearch.service.wechat.NoticeChatgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -44,7 +46,10 @@ public class NoticeChatgroupServiceImpl implements NoticeChatgroupService {
 
     @Override
     public void storeNoticeGId(String noticeId, String groupId) {
-
+        long count = noticeChatgroupRepository.count(Example.of(NoticeChatgroupEntity.builder().noticeId(noticeId).groupId(groupId).build()));
+        if (count == 0) {
+            noticeChatgroupRepository.save(NoticeChatgroupEntity.builder().noticeId(noticeId).groupId(groupId).build());
+        }
     }
 
     @Override

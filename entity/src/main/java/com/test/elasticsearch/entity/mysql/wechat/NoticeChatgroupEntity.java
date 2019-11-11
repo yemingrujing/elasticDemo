@@ -1,11 +1,15 @@
 package com.test.elasticsearch.entity.mysql.wechat;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Setter
+@Getter
 @Entity
 @Table(name = "t_notice_chatgroup")
 public class NoticeChatgroupEntity implements Serializable {
