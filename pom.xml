@@ -43,6 +43,7 @@
         <cn.afterturn.version>4.0.0</cn.afterturn.version>
         <org.apache.httpcomponents>4.5.9</org.apache.httpcomponents>
         <us.codecraft.version>0.7.3</us.codecraft.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
     </properties>
 
     <repositories>
@@ -197,6 +198,18 @@
                 <groupId>us.codecraft</groupId>
                 <artifactId>webmagic-extension</artifactId>
                 <version>${us.codecraft.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>javax.mail-api</artifactId>
+                <version>${javax.mail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax.mail.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
