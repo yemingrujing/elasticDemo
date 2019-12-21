@@ -34,16 +34,18 @@
         <elasticsearch.version>7.0.1</elasticsearch.version>
         <spring.boot.starter.data.version>2.1.8.RELEASE</spring.boot.starter.data.version>
         <com.google.guava.version>28.1-jre</com.google.guava.version>
-        <cn.hutool.version>5.0.4</cn.hutool.version>
+        <cn.hutool.version>5.1.0</cn.hutool.version>
         <mysql.connector.java.version>8.0.16</mysql.connector.java.version>
         <org.projectlombok.version>1.18.8</org.projectlombok.version>
         <net.logstash.logback.version>5.3</net.logstash.logback.version>
         <jpa.spec.version>3.2.4</jpa.spec.version>
         <querydsl.version>4.2.1</querydsl.version>
-        <cn.afterturn.version>4.0.0</cn.afterturn.version>
+        <cn.afterturn.version>4.1.3</cn.afterturn.version>
         <org.apache.httpcomponents>4.5.9</org.apache.httpcomponents>
         <us.codecraft.version>0.7.3</us.codecraft.version>
         <javax.mail.version>1.6.2</javax.mail.version>
+        <com.alibaba.version>1.2.62</com.alibaba.version>
+        <com.github.whvcse.version>1.6.2</com.github.whvcse.version>
     </properties>
 
     <repositories>
@@ -210,6 +212,12 @@
                 <groupId>com.sun.mail</groupId>
                 <artifactId>javax.mail</artifactId>
                 <version>${javax.mail.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${com.github.whvcse.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
