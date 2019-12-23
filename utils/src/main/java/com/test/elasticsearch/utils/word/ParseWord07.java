@@ -213,7 +213,7 @@ public class ParseWord07 {
      * @throws Exception
      */
     public XWPFDocument parseWord(String url, Map<String, Object> map) throws Exception {
-        MyXWPFDocument doc = WordCache.getXWPFDocumen(url);
+        MyXWPFDocument doc = WordCache.getXWPFDocument(url);
         parseWordSetValue(doc, map);
         return doc;
     }

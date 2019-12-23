@@ -34,7 +34,6 @@ public class RedisService {
      */
     private volatile boolean redisSwitch = true;
 
-
     /**
      * 写入缓存
      *
@@ -584,7 +583,7 @@ public class RedisService {
     public Integer incr(String key, Long liveTime) {
         RedisAtomicInteger inviteCounter  = new RedisAtomicInteger(key, redisTemplate.getConnectionFactory());
         Integer increment = inviteCounter.getAndIncrement();
-        if ((null == increment || increment.intValue() == 0) && liveTime > 0) {
+        if (increment == 0 && liveTime > 0) {
             // 初始设置过期时间 单位毫秒
             inviteCounter.expire(liveTime, TimeUnit.MILLISECONDS);
         }
