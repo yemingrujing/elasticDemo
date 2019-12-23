@@ -1,6 +1,5 @@
 package com.test.elasticsearch.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Maps;
 import com.test.elasticsearch.config.rabbitmq.RabbitSender;
 import com.test.elasticsearch.config.redis.RedisService;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -82,17 +82,17 @@ public class TestController {
         try {
             // 生成随机验证码
             int charSize = 6;
-            String verifyCode = RandonImgCodeUtil.generateVerifyCode(charSize);
+            Map<String, Object> map = RandonImgCodeUtil.generateVerifyCode(charSize, new Random().nextInt(2));
 
-            if (StrUtil.isNotBlank(verifyCode)) {
+            if (Objects.nonNull(map.get("result"))) {
                 String key = "captcha:" + request.getSession().getId() + "_" + UUID.randomUUID().toString().replace("-", "");
-                redisService.set(key, verifyCode, 90L);
+                redisService.set(key, map.get("result"), 90L);
             }
 
             // 生成图片规格w宽 h高
             int w = 100, h = 40;
             int type = new Random().nextInt(7);
-            RandonImgCodeUtil.generate(response.getOutputStream(), w, h, verifyCode, type);
+            RandonImgCodeUtil.generate(response.getOutputStream(), w, h, (String) map.get("key"), type);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

@@ -1,5 +1,6 @@
 package com.test.elasticsearch.utils.captcha;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
@@ -8,6 +9,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -33,13 +36,23 @@ public class RandonImgCodeUtil {
     // 验证码来源范围，去掉了0,1,I,O,l,o几个容易混淆的字符
     public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
 
+    //零一二三四五六七八九十乘除加减
+    private static final String CVCNUMBERS = "\\u96F6\\u4E00\\u4E8C\\u4E09\\u56DB\\u4E94\\u516D\\u4E03\\u516B\\u4E5D\\u5341\\u4E58\\u9664\\u52A0\\u51CF";
+
     private static ImgFontByte imgFontByte = new ImgFontByte();
+
+    //data operator
+    private static final Map<String, Integer> OPMap = Maps.newHashMap();
 
     private static Font baseFont;
     static {
         try
         {
             baseFont = Font.createFont(Font.TRUETYPE_FONT, new ByteArrayInputStream(imgFontByte.hex2byte(imgFontByte.getFontByteStr())));
+            OPMap.put("*", 11);
+            OPMap.put("/", 12);
+            OPMap.put("+", 13);
+            OPMap.put("-", 14);
         } catch (FontFormatException e) {
             log.error("new img font font format failed. e: " + e.getMessage(), e);
         } catch (IOException e) {
@@ -70,9 +83,9 @@ public class RandonImgCodeUtil {
      * @param verifySize 验证码长度
      * @return
      */
-    public static String generateVerifyCode(int verifySize)
+    public static Map<String, Object> generateVerifyCode(int verifySize, int type)
     {
-        return generateVerifyCode(verifySize, VERIFY_CODES);
+        return generateVerifyCode(verifySize, VERIFY_CODES, type);
     }
 
     /**
@@ -82,18 +95,93 @@ public class RandonImgCodeUtil {
      * @param sources 验证码字符源
      * @return
      */
-    private static String generateVerifyCode(int verifySize, String sources) {
+    private static Map<String, Object> generateVerifyCode(int verifySize, String sources, int type) {
         if (sources == null || sources.length() == 0) {
             sources = VERIFY_CODES;
         }
-        int codesLen = sources.length();
-        Random rand = new Random(System.currentTimeMillis());
-        StringBuilder verifyCode = new StringBuilder(verifySize);
-        for (int i = 0; i < verifySize; i++) {
-            verifyCode.append(sources.charAt(rand.nextInt(codesLen - 1)));
-        }
+        Map<String, Object> map = Maps.newHashMap();
+        switch(type) {
+            case 0:
+                int codesLen = sources.length();
+                Random rand = new Random(System.currentTimeMillis());
+                StringBuilder verifyCode = new StringBuilder(verifySize);
+                for (int i = 0; i < verifySize; i++) {
+                    verifyCode.append(sources.charAt(rand.nextInt(codesLen - 1)));
+                }
+                map.put("key", verifyCode.toString());
+                map.put("result", verifyCode.toString());
+                break;
+            case 1:
+                getRandomMathString(map);
+                break;
+            default:
+                getRandomMathString(map);
+                break;
 
-        return verifyCode.toString();
+        }
+        return map;
+    }
+
+    /**
+     * Get a random string
+     * */
+    private static void getRandomMathString(Map<String, Object> map){
+        int xyresult;
+        //Randomly generated number 0 to 10
+        int xx = random.nextInt(10);
+        int yy = random.nextInt(10);
+        //save getRandomString
+        StringBuilder suChinese =  new StringBuilder();
+        //random 0,1,2
+        int Randomoperands = (int) Math.round(Math.random()*2);
+        //multiplication
+        if(Randomoperands ==0){
+            xyresult = yy * xx;
+//				suChinese.append(CNUMBERS[yy]);
+            suChinese.append(yy);
+            suChinese.append("*");
+            suChinese.append(xx);
+            //division, divisor cannot be zero, Be divisible
+        }else if(Randomoperands ==1){
+            if(!(xx==0) && yy%xx ==0){
+                xyresult = yy/xx;
+                suChinese.append(yy);
+                suChinese.append("/");
+                suChinese.append(xx);
+            }else{
+                xyresult = yy + xx;
+                suChinese.append(yy);
+                suChinese.append("+");
+                suChinese.append(xx);
+            }
+            //subtraction
+        }else if(Randomoperands ==2){
+            xyresult = yy - xx;
+            suChinese.append(yy);
+            suChinese.append("-");
+            suChinese.append(xx);
+            //add
+        }else{
+            xyresult = yy + xx;
+            suChinese.append(yy);
+            suChinese.append("+");
+            suChinese.append(xx);
+        }
+        StringBuffer logsu = new StringBuffer();
+        String temp = suChinese.toString();
+        for(int j=0,k = temp.length(); j < k; j++) {
+            int chid;
+            if (j == 1) {
+                chid = OPMap.get(String.valueOf(temp.charAt(j)));
+            } else {
+                chid = Integer.parseInt(String.valueOf(temp.charAt(j)));
+            }
+            String ch = String.valueOf(CVCNUMBERS.charAt(chid));
+            logsu.append(ch);
+        }
+        logsu.append("\\u7B49\\u4E8E \\uFF1F");
+        map.put("key", logsu.toString());
+        map.put("result", xyresult);
     }
 
     /**
@@ -508,8 +596,7 @@ public class RandonImgCodeUtil {
     }
 
     public static void generate(OutputStream outputStream, int w, int h, String verifyCode, int type) throws IOException {
-        switch(type)
-        {
+        switch(type) {
             case 0:
                 outputImage(w, h, outputStream, verifyCode, "login");
                 break;
@@ -557,13 +644,13 @@ public class RandonImgCodeUtil {
         try {
             outputFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(outputFile);
-            // outputImage(w, h, fos, code, "login"); //测试登录，噪点和干扰线为0.05f和20
+             outputImage(w, h, fos, code, "login"); //测试登录，噪点和干扰线为0.05f和20
             // outputImage(w, h, fos, code, "coupons"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "3D"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "GIF"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "GIF3D"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "mix2"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
-            outputImage(w, h, fos, code, "mixGIF"); // 测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
+            // outputImage(w, h, fos, code, "mixGIF"); // 测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             fos.close();
         } catch (IOException e) {
             throw e;
@@ -579,10 +666,10 @@ public class RandonImgCodeUtil {
     public static void main(String[] args) throws IOException {
         File dir = new File("E:/logtest/verifies8");
         int w = 120, h = 48;
-        for (int i = 0; i < 150; i++) {
-            String verifyCode = generateVerifyCode(4);
-            File file = new File(dir, verifyCode + ".gif");
-            outputImage(w, h, file, verifyCode);
+        for (int i = 0; i < 2; i++) {
+            Map<String, Object> map = generateVerifyCode(4, 1);
+            File file = new File(dir, map.get("result") + ".gif");
+            outputImage(w, h, file, (String) map.get("key"));
         }
     }
 }
