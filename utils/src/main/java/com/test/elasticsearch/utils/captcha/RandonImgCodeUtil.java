@@ -45,6 +45,8 @@ public class RandonImgCodeUtil {
 
     private static final Font font = new Font("黑体", Font.BOLD, 18);
 
+    private static final char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
     private static Font baseFont;
     static {
         try
@@ -741,10 +743,10 @@ public class RandonImgCodeUtil {
     }
 
     private static void transformChar() {
-        File fileOld = new File("E:\\logtest\\verifies8\\金梅美工空心字形.TTF");
+        File fileOld = new File("E:\\logtest\\verifies8\\STCAIYUN.TTF");
         try(FileInputStream inputStream = new FileInputStream(fileOld);
             ByteArrayOutputStream bos= new java.io.ByteArrayOutputStream();
-            PrintWriter pw = new PrintWriter(new FileWriter("E:\\logtest\\verifies8\\test.txt"))) {
+            PrintWriter pw = new PrintWriter(new FileWriter("E:\\logtest\\verifies8\\test.txt", Boolean.TRUE))) {
             byte[] array = new byte[1024];
             int ch;
             while ((ch=inputStream.read()) != -1) {
@@ -753,27 +755,10 @@ public class RandonImgCodeUtil {
             //得到图片的字节数组
             byte[] result = bos.toByteArray();
             //字节数组转成十六进制
-            String str = byte2HexStr(result);
-            pw.println(str);
+            bytesToHexString(pw, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /*
-     *  实现字节数组向十六进制的转换方法一
-     */
-    public static String byte2HexStr(byte[] b) {
-        String hs = "";
-        String stmp;
-        for (int n = 0; n < b.length; n++) {
-            stmp = (Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1)
-                hs = hs + "0" + stmp;
-            else
-                hs=hs + stmp;
-        }
-        return hs.toLowerCase();
     }
 
     private static byte uniteBytes(String src0, String src1) {
@@ -784,20 +769,18 @@ public class RandonImgCodeUtil {
         return ret;
     }
 
-    public static String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static void bytesToHexString(PrintWriter pw, byte[] src) {
         if (src == null || src.length <= 0) {
-            return null;
+            return;
         }
-        for (int i = 0; i < src.length; i++) {
-            int v = src[i] & 0xFF;
+        for (byte aSrc : src) {
+            int v = aSrc & 0xFF;
             String hv = Integer.toHexString(v);
             if (hv.length() < 2) {
-                stringBuilder.append(0);
+                pw.write(0);
             }
-            stringBuilder.append(hv);
+            pw.write(hv);
         }
-        return stringBuilder.toString();
     }
 
     /**
@@ -807,6 +790,7 @@ public class RandonImgCodeUtil {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+//        transformChar();
         File dir = new File("E:/logtest/verifies8");
         int w = 200, h = 48;
         for (int i = 0; i < 150; i++) {
