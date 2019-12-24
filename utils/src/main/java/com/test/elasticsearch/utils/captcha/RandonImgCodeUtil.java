@@ -2,8 +2,6 @@ package com.test.elasticsearch.utils.captcha;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
