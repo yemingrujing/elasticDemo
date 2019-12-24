@@ -469,7 +469,8 @@ public class RandonImgCodeUtil {
         } else if (type.equals("coupons")) {
             return new Font(name, style, size);
         } else if (type.contains("3D")) {
-            return new ImgFontByte().getFont(size, style);
+            //return new ImgFontByte().getFont(size, style);
+            return new Font(name, style, size);
         } else if (type.contains("mix")) {
             int flag = random.nextInt(10);
             if (flag > 4) {
@@ -806,13 +807,12 @@ public class RandonImgCodeUtil {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        transformChar();
-//        File dir = new File("E:/logtest/verifies8");
-//        int w = 200, h = 48;
-//        for (int i = 0; i < 2; i++) {
-//            Map<String, Object> map = generateVerifyCode(4, 1);
-//            File file = new File(dir, map.get("result") + ".gif");
-//            outputImage(w, h, file, (String) map.get("key"));
-//        }
+        File dir = new File("E:/logtest/verifies8");
+        int w = 200, h = 48;
+        for (int i = 0; i < 150; i++) {
+            Map<String, Object> map = generateVerifyCode(4, 1);
+            File file = new File(dir, map.get("result") + ".gif");
+            outputImage(w, h, file, (String) map.get("key"));
+        }
     }
 }
