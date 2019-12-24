@@ -2,6 +2,8 @@ package com.test.elasticsearch.utils.captcha;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,7 +11,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -37,12 +38,14 @@ public class RandonImgCodeUtil {
     public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz";
 
     //零一二三四五六七八九十乘除加减
-    private static final String CVCNUMBERS = "\\u96F6\\u4E00\\u4E8C\\u4E09\\u56DB\\u4E94\\u516D\\u4E03\\u516B\\u4E5D\\u5341\\u4E58\\u9664\\u52A0\\u51CF";
+    private static final String CVCNUMBERS = "\u96F6\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D\u5341\u4E58\u9664\u52A0\u51CF";
 
     private static ImgFontByte imgFontByte = new ImgFontByte();
 
     //data operator
     private static final Map<String, Integer> OPMap = Maps.newHashMap();
+
+    private static final Font font = new Font("黑体", Font.BOLD, 18);
 
     private static Font baseFont;
     static {
@@ -62,8 +65,7 @@ public class RandonImgCodeUtil {
 
     // 字体类型
     private static String[] fontName = {
-                    "Algerian", "Arial", "Arial Black", "Agency FB", "Calibri", "Cambria", "Gadugi", "Georgia", "Consolas", "Comic Sans MS", "Courier New",
-                    "Gill sans", "Time News Roman", "Tahoma", "Quantzite", "Verdana"
+                    "宋体", "黑体", "楷体", "隶书", "方正字体", "圆体", "琥珀体"
             };
 
     // 字体样式
@@ -179,7 +181,7 @@ public class RandonImgCodeUtil {
             String ch = String.valueOf(CVCNUMBERS.charAt(chid));
             logsu.append(ch);
         }
-        logsu.append("\\u7B49\\u4E8E \\uFF1F");
+        logsu.append("\u7B49\u4E8E\uFF1F");
         map.put("key", logsu.toString());
         map.put("result", xyresult);
     }
@@ -232,7 +234,7 @@ public class RandonImgCodeUtil {
         // 1.绘制干扰线
         Random random = new Random();
         g2.setColor(getRandColor(160, 200));// 设置线条的颜色
-        int lineNumbers = 20;
+        int lineNumbers;
         if (type.equals("login") || type.contains("mix") || type.contains("3D")) {
             lineNumbers = 20;
         } else if (type.equals("coupons")) {
@@ -249,7 +251,7 @@ public class RandonImgCodeUtil {
         }
 
         // 2.添加噪点
-        float yawpRate = 0.05f;
+        float yawpRate;
         if (type.equals("login") || type.contains("mix") || type.contains("3D")) {
             yawpRate = 0.05f; // 噪声率
         } else if (type.equals("coupons")) {
@@ -314,20 +316,102 @@ public class RandonImgCodeUtil {
             gifEncoder.finish();
             g2.dispose();
         } else {
-            for (int i = 0; i < verifySize; i++) {
-                g2.setColor(getRandColor(100, 160));
-                g2.setFont(getRandomFont(h, type));
-
-                AffineTransform affine = new AffineTransform();
-                affine.setToRotation(Math.PI / 4 * rd * (rb ? 1 : -1), (w / verifySize) * i + (h - 4) / 2, h / 2);
-                g2.setTransform(affine);
-                g2.drawOval(random.nextInt(w), random.nextInt(h), 5 + random.nextInt(10), 5 + random.nextInt(10));
-                g2.drawChars(chars, i, 1, ((w - 10) / verifySize) * i + 5, h / 2 + (h - 4) / 2 - 10);
+            int DISTURB_LINE_SIZE  = 15;
+            //Generate random interference lines
+            for(int i =0; i < DISTURB_LINE_SIZE; i++){
+                drawDisturbLine1(g2);
+                drawDisturbLine2(g2);
             }
-
+            drawRandomString(g2, code, 0);
             g2.dispose();
             ImageIO.write(image, "jpg", os);
         }
+    }
+
+    /**
+     * Draw a random string
+     * @param g Graphics
+     * @param randomvcch random string
+     * @param i the random number of characters
+     * */
+    private static void drawRandomString(Graphics2D g, String randomvcch, int i) {
+        //Set the string font style
+        g.setFont(font);
+        //Set the color string
+        int rc = random.nextInt(255);
+        int gc = random.nextInt(255);
+        int bc = random.nextInt(255);
+        g.setColor(new Color(rc, gc, bc));
+        //random string
+        //Set picture in the picture of the text on the x, y coordinates, random offset value
+        int x = random.nextInt(3);
+        int y = random.nextInt(2);
+        g.translate(x, y);
+        //Set the font rotation angle
+        int degree = new Random().nextInt() % 15;
+        //Positive point of view
+        g.rotate(degree * Math.PI / 180, 5+i*25, 20);
+        //Character spacing is set to 15 px
+        //Using the graphics context of the current font and color rendering by the specified string for a given text.
+        //The most on the left side of the baseline of the characters in the coordinate system of the graphics context (x, y) location
+        //str- to draw string.x - x coordinate.y - y coordinate.
+        g.drawString(randomvcch, 5+i*25, 20);
+        //Reverse Angle
+        g.rotate(-degree * Math.PI / 180, 5+i*25, 20);
+    }
+
+    /**
+     *Draw line interference
+     *@param g Graphics
+     * */
+    private static void drawDisturbLine1(Graphics g) {
+        int x1 = random.nextInt(146);
+        int y1 = random.nextInt(30);
+        int x2 = random.nextInt(13);
+        int y2 = random.nextInt(15);
+        //x1 - The first point of the x coordinate.
+        //y1 - The first point of the y coordinate
+        //x2 - The second point of the x coordinate.
+        //y2 - The second point of the y coordinate.
+        //X1 and x2 is the starting point coordinates, x2 and y2 is end coordinates.
+        g.drawLine(x1, y1, x1 + x2, y1 + y2);
+    }
+
+    /**
+     *Draw line interference
+     *@param g Graphics
+     * */
+    private static void drawDisturbLine2(Graphics g) {
+        int x1 = random.nextInt(146);
+        int y1 = random.nextInt(30);
+        int x2 = random.nextInt(13);
+        int y2 = random.nextInt(15);
+        //x1 - The first point of the x coordinate.
+        //y1 - The first point of the y coordinate
+        //x2 - The second point of the x coordinate.
+        //y2 - The second point of the y coordinate.
+        //X1 and x2 is the starting point coordinates, x2 and y2 is end coordinates.
+        g.drawLine(x1, y1, x1 - x2, y1 - y2);
+    }
+
+    /**
+     * For random color
+     * @param fc fc
+     * @param bc bc
+     * @return color random color
+     * */
+    private static Color getRandomColor(int fc,int bc){
+        if (fc > 255) {
+            fc = 255;
+        }
+        if (bc > 255) {
+            bc = 255;
+        }
+        //Generate random RGB trichromatic
+        int r = fc+random.nextInt(bc -fc - 16);
+        int g = fc+random.nextInt(bc - fc - 14);
+        int b = fc+random.nextInt(bc - fc - 18);
+        return new Color(r, g, b);
     }
 
     /**
@@ -451,7 +535,7 @@ public class RandonImgCodeUtil {
                 }
                 return font.deriveFont(fontStype, fontSize);
             } catch (Exception e) {
-                return new Font("Arial", fontStype, fontSize);
+                return new Font("黑体", fontStype, fontSize);
             }
         }
 
@@ -644,17 +728,77 @@ public class RandonImgCodeUtil {
         try {
             outputFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(outputFile);
-             outputImage(w, h, fos, code, "login"); //测试登录，噪点和干扰线为0.05f和20
+            // outputImage(w, h, fos, code, "login"); //测试登录，噪点和干扰线为0.05f和20
             // outputImage(w, h, fos, code, "coupons"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "3D"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "GIF"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
-            // outputImage(w, h, fos, code, "GIF3D"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
+             outputImage(w, h, fos, code, "GIF3D"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "mix2"); //测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             // outputImage(w, h, fos, code, "mixGIF"); // 测试领券，噪点和干扰线为范围随机值0.05f ~ 0.1f和20 ~ 155
             fos.close();
         } catch (IOException e) {
             throw e;
         }
+    }
+
+    private static void transformChar() {
+        File fileOld = new File("E:\\logtest\\verifies8\\金梅美工空心字形.TTF");
+        try(FileInputStream inputStream = new FileInputStream(fileOld);
+            ByteArrayOutputStream bos= new java.io.ByteArrayOutputStream();
+            PrintWriter pw = new PrintWriter(new FileWriter("E:\\logtest\\verifies8\\test.txt"))) {
+            byte[] array = new byte[1024];
+            int ch;
+            while ((ch=inputStream.read()) != -1) {
+                bos.write(array, 0, ch);
+            }
+            //得到图片的字节数组
+            byte[] result = bos.toByteArray();
+            //字节数组转成十六进制
+            String str = byte2HexStr(result);
+            pw.println(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *  实现字节数组向十六进制的转换方法一
+     */
+    public static String byte2HexStr(byte[] b) {
+        String hs = "";
+        String stmp;
+        for (int n = 0; n < b.length; n++) {
+            stmp = (Integer.toHexString(b[n] & 0XFF));
+            if (stmp.length() == 1)
+                hs = hs + "0" + stmp;
+            else
+                hs=hs + stmp;
+        }
+        return hs.toLowerCase();
+    }
+
+    private static byte uniteBytes(String src0, String src1) {
+        byte b0 = Byte.decode("0x" + src0);
+        b0 = (byte) (b0 << 4);
+        byte b1 = Byte.decode("0x" + src1);
+        byte ret = (byte) (b0 | b1);
+        return ret;
+    }
+
+    public static String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+        for (int i = 0; i < src.length; i++) {
+            int v = src[i] & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv);
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -664,12 +808,13 @@ public class RandonImgCodeUtil {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        File dir = new File("E:/logtest/verifies8");
-        int w = 120, h = 48;
-        for (int i = 0; i < 2; i++) {
-            Map<String, Object> map = generateVerifyCode(4, 1);
-            File file = new File(dir, map.get("result") + ".gif");
-            outputImage(w, h, file, (String) map.get("key"));
-        }
+        transformChar();
+//        File dir = new File("E:/logtest/verifies8");
+//        int w = 200, h = 48;
+//        for (int i = 0; i < 2; i++) {
+//            Map<String, Object> map = generateVerifyCode(4, 1);
+//            File file = new File(dir, map.get("result") + ".gif");
+//            outputImage(w, h, file, (String) map.get("key"));
+//        }
     }
 }
