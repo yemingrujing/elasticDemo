@@ -749,7 +749,7 @@ public class RandonImgCodeUtil {
             PrintWriter pw = new PrintWriter(new FileWriter("E:\\logtest\\verifies8\\test.txt", Boolean.TRUE))) {
             byte[] array = new byte[1024];
             int ch;
-            while ((ch=inputStream.read()) != -1) {
+            while ((ch=inputStream.read(array)) != -1) {
                 bos.write(array, 0, ch);
             }
             //得到图片的字节数组
@@ -774,12 +774,11 @@ public class RandonImgCodeUtil {
             return;
         }
         for (byte aSrc : src) {
-            int v = aSrc & 0xFF;
-            String hv = Integer.toHexString(v);
+            String hv = Integer.toHexString(aSrc & 0xFF);
             if (hv.length() < 2) {
-                pw.write(0);
+                pw.print(0);
             }
-            pw.write(hv);
+            pw.print(hv);
         }
     }
 
@@ -790,13 +789,13 @@ public class RandonImgCodeUtil {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-//        transformChar();
-        File dir = new File("E:/logtest/verifies8");
-        int w = 200, h = 48;
-        for (int i = 0; i < 150; i++) {
-            Map<String, Object> map = generateVerifyCode(4, 1);
-            File file = new File(dir, map.get("result") + ".gif");
-            outputImage(w, h, file, (String) map.get("key"));
-        }
+        transformChar();
+//        File dir = new File("E:/logtest/verifies8");
+//        int w = 200, h = 48;
+//        for (int i = 0; i < 150; i++) {
+//            Map<String, Object> map = generateVerifyCode(4, 1);
+//            File file = new File(dir, map.get("result") + ".gif");
+//            outputImage(w, h, file, (String) map.get("key"));
+//        }
     }
 }
