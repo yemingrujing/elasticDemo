@@ -13,7 +13,7 @@
 -->
 <configuration>
     <property name="logger.path" value="D:/logs" />
-    <property name="logstash.ip" value="39.105.75.88" />
+    <property name="logstash.ip" value="localhost" />
     <property name="logstash.port" value="5044" />
 
     <!-- 彩色日志 -->
